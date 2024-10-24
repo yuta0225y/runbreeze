@@ -101,4 +101,7 @@
     - MiniMagick (画像処理用)
 
 ## ■ 画面遷移図
-Figma：https://www.figma.com/design/DzoAn9Omlx50S9XRIt02uF/RunBreeze-(AI%E6%A0%A1%E6%AD%A3%EF%BC%89?node-id=0-1&t=taU6fewwxzLGpUAV-1
+https://www.figma.com/design/DzoAn9Omlx50S9XRIt02uF/RunBreeze-(AI%E6%A0%A1%E6%AD%A3%EF%BC%89?node-id=0-1&t=taU6fewwxzLGpUAV-1
+
+## ■ ER図
+https://dbdiagram.io/d/6719c06b97a66db9a313d3b9
