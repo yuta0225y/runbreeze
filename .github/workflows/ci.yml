@@ -47,18 +47,25 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres
+      db:
+        image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: myapp_test
         ports:
           - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client dnsutils
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -74,16 +81,19 @@ jobs:
 
       - name: Set up test database
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          DB_HOST: db
+          DB_USERNAME: postgres
+          DB_PASSWORD: password
         run: |
           bin/rails db:create
           bin/rails db:schema:load
-          bin/rails db:test:prepare
 
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          DB_HOST: db
+          DB_USERNAME: postgres
+          DB_PASSWORD: password
         run: |
           bin/rails test test:system
 

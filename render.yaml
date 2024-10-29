@@ -17,3 +17,4 @@ databases:
   - name: myapp-db
     databaseName: myapp
     user: myapp
+    password: password # 必要に応じてパスワードを設定
