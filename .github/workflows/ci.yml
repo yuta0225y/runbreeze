@@ -8,7 +8,6 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,19 +80,22 @@ jobs:
 
       - name: Set up test database
         env:
-          DB_HOST: db
-          DB_USERNAME: postgres
-          DB_PASSWORD: password
+          DATABASE_URL: postgres://postgres:password@db:5432/myapp_test
         run: |
           bin/rails db:create
           bin/rails db:schema:load
 
+      - name: Debug - Check DATABASE_URL
+        run: echo $DATABASE_URL
+
+      - name: Debug - Test PostgreSQL Connection
+        run: |
+          PGPASSWORD=password psql -h db -U postgres -c "\l"
+
       - name: Run tests
         env:
           RAILS_ENV: test
-          DB_HOST: db
-          DB_USERNAME: postgres
-          DB_PASSWORD: password
+          DATABASE_URL: postgres://postgres:password@db:5432/myapp_test
         run: |
           bin/rails test test:system
 
