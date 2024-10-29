@@ -8,6 +8,7 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -52,10 +53,9 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: myapp_test
-        ports:
-          - 5432:5432
+        # ports: - 5432:5432  # この行を削除
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U postgres -d myapp_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -86,11 +86,17 @@ jobs:
           bin/rails db:schema:load
 
       - name: Debug - Check DATABASE_URL
-        run: echo $DATABASE_URL
+        run: echo "DATABASE_URL=$DATABASE_URL"
+
+      - name: Debug - Test DNS resolution for 'db'
+        run: |
+          sudo apt-get install -y dnsutils
+          nslookup db || echo "Cannot resolve 'db'"
+          ping -c 1 db || echo "'db' is not reachable"
 
       - name: Debug - Test PostgreSQL Connection
         run: |
-          PGPASSWORD=password psql -h db -U postgres -c "\l"
+          PGPASSWORD=password psql -h db -U postgres -c "\l" || echo "PostgreSQL connection failed"
 
       - name: Run tests
         env:
