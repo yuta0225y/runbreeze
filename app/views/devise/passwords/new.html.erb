@@ -1,0 +1,31 @@
+<h2 class="text-3xl font-bold text-center mb-6">パスワードをお忘れですか？</h2>
+
+<p class="text-center mb-6">メールアドレスを入力すると、パスワードリセット用のリンクを送信します。</p>
+
+<%= form_with(model: resource, as: resource_name, url: password_path(resource_name)) do |f| %>
+  <!-- エラーメッセージの表示 -->
+  <% if resource.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- メールアドレスフィールド -->
+  <div class="form-control mb-6">
+    <%= f.label :email, class: "label" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+  </div>
+
+  <!-- パスワードリセットリンク送信ボタン -->
+  <div class="form-control">
+    <%= f.submit "パスワードリセットリンクを送信", class: "btn btn-primary w-full" %>
+  </div>
+<% end %>
+
+<div class="mt-4 text-center">
+  <%= link_to "ログインに戻る", new_session_path(resource_name), class: "link link-primary" %>
+</div>

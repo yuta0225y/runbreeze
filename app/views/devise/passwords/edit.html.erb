@@ -1,0 +1,35 @@
+<h2 class="text-3xl font-bold text-center mb-6">新しいパスワードの設定</h2>
+
+<%= form_with(model: resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <!-- エラーメッセージの表示 -->
+  <% if resource.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- 新しいパスワードフィールド -->
+  <div class="form-control mb-4">
+    <%= f.label :password, "新しいパスワード", class: "label" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+  </div>
+
+  <!-- 新しいパスワード確認フィールド -->
+  <div class="form-control mb-6">
+    <%= f.label :password_confirmation, "新しいパスワードの確認", class: "label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+  </div>
+
+  <!-- パスワード更新ボタン -->
+  <div class="form-control">
+    <%= f.submit "パスワードを更新", class: "btn btn-primary w-full" %>
+  </div>
+<% end %>
+
+<div class="mt-4 text-center">
+  <%= link_to "ログインに戻る", new_session_path(resource_name), class: "link link-primary" %>
+</div>
