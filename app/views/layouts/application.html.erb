@@ -18,6 +18,15 @@
   </head>
 
   <body>
+    <!-- フラッシュメッセージの表示 -->
+    <% flash.each do |key, message| %>
+      <div class="alert alert-<%= key %> mb-4">
+        <div>
+          <span><%= message %></span>
+        </div>
+      </div>
+    <% end %>
+    
     <%= render "shared/header" %> 
     <%= yield %>
     <%= render "shared/footer" %>

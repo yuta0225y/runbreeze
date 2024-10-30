@@ -1,0 +1,38 @@
+<h2 class="text-3xl font-bold text-center mb-6">ログイン</h2>
+
+<%= form_with(model: resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <!-- エラーメッセージの表示 -->
+  <% if flash[:alert] %>
+    <div class="alert alert-error mb-4">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <!-- メールアドレスフィールド -->
+  <div class="form-control mb-4">
+    <%= f.label :email, class: "label" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+  </div>
+
+  <!-- パスワードフィールド -->
+  <div class="form-control mb-6">
+    <%= f.label :password, class: "label" %>
+    <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+  </div>
+
+  <!-- リメンバー・ミーとパスワードリセットリンク -->
+  <div class="form-control flex items-center justify-between mb-6">
+    <%= f.check_box :remember_me, class: "checkbox checkbox-primary" %>
+    <%= f.label :remember_me, class: "label cursor-pointer" %>
+    <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "text-sm link link-primary ml-2" %>
+  </div>
+
+  <!-- ログインボタン -->
+  <div class="form-control">
+    <%= f.submit "ログイン", class: "btn btn-primary w-full" %>
+  </div>
+<% end %>
+
+<div class="mt-4 text-center">
+  <%= link_to "新規登録はこちら", new_registration_path(resource_name), class: "link link-primary" %>
+</div>
