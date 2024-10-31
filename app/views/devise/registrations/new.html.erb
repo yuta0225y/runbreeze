@@ -1,7 +1,7 @@
 <h2 class="text-3xl font-bold text-center mb-6">新規登録</h2>
 
 <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <!-- エラーメッセージの表示 -->
+
   <% if resource.errors.any? %>
     <div class="alert alert-error mb-4">
       <ul>
