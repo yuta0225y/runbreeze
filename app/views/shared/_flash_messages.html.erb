@@ -1,0 +1,18 @@
+<% flash.each do |key, message| %>
+  <div class="alert <%= "alert-success" if key == "notice" %> <%= "alert-error" if key == "alert" %> <%= "alert-info" if key == "info" %> <%= "alert-warning" if key == "warning" %> shadow-lg mb-4">
+    <div>
+      <%# アイコンを表示 %>
+      <% if key == "notice" %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+      <% elsif key == "alert" %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M12 4h.01" /></svg>
+      <% elsif key == "info" %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M13 20h-1v-2h1v2z" /></svg>
+      <% elsif key == "warning" %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 3v2m0 4v2m0 4v2m0-12h.01M3 3h.01" /></svg>
+      <% end %>
+
+      <span><%= message %></span>
+    </div>
+  </div>
+<% end %>

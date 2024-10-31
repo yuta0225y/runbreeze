@@ -18,17 +18,14 @@
   </head>
 
   <body>
-    <!-- フラッシュメッセージの表示 -->
-    <% flash.each do |key, message| %>
-      <div class="alert alert-<%= key %> mb-4">
-        <div>
-          <span><%= message %></span>
-        </div>
-      </div>
-    <% end %>
-    
-    <%= render "shared/header" %> 
-    <%= yield %>
-    <%= render "shared/footer" %>
+  <%= render 'shared/flash_messages' %>
+
+  <% if user_signed_in? %>
+    <%= render 'shared/after_header_login' %>
+  <% else %>
+    <%= render 'shared/before_header_login' %>
+  <% end %>
+  <%= yield %>
+  <%= render "shared/footer" %>
   </body>
 </html>

@@ -1,0 +1,24 @@
+<div class="navbar bg-base-100">
+  <div class="flex-1">
+    <%= link_to 'RunBreeze', root_path, class: "btn btn-ghost text-xl" %>
+  </div>
+  <div class="flex-none flex items-center gap-2">
+    <%= link_to 'ログイン', new_user_session_path, class: "btn btn-ghost" %>
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-square btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </label>
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li><%= link_to '新規登録', new_user_registration_path, class: "btn btn-ghost" %></li>
+        <hr>
+        <li><%= link_to '利用規約', "", class: "btn btn-ghost w-full text-left" %></li>
+        <li><%= link_to 'プライバシーポリシー', "", class: "btn btn-ghost w-full text-left" %></li>
+        <li><%= link_to 'お問い合わせ', "", class: "btn btn-ghost w-full text-left" %></li>
+        <hr>
+        <li class="text-center text-xs mt-2">&copy; 2024 RunBreeze</li>
+      </ul>
+    </div>
+  </div>
+</div>
