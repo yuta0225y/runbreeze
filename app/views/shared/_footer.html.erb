@@ -1,14 +1,17 @@
 <div class="btm-nav btm-nav-lg">
-  <button>
+
+  <%= link_to "", class: "flex flex-col items-center btm-nav-item" do %>
     <%= image_tag 'home_button.svg', alt: "Home", class: "h-5 w-5" %>
     <span class="btm-nav-label">投稿一覧</span>
-  </button>
-  <button class="active">
-  <%= image_tag 'create_button.svg', alt: "Create", class: "h-5 w-5" %>
-  <span class="btm-nav-label">投稿する</span>
-</button>
-  <button>
+  <% end %>
+
+  <%= link_to "", class: "flex flex-col items-center btm-nav-item active" do %>
+    <%= image_tag 'create_button.svg', alt: "Create", class: "h-5 w-5" %>
+    <span class="btm-nav-label">投稿する</span>
+  <% end %>
+
+  <%= link_to edit_user_registration_path, class: "flex flex-col items-center btm-nav-item" do %>
     <%= image_tag 'mypage_button.svg', alt: "My Page", class: "h-5 w-5" %>
     <span class="btm-nav-label">マイページ</span>
-  </button>
+  <% end %>
 </div>
