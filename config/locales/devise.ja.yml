@@ -10,8 +10,11 @@ ja:
       send_instructions: "パスワードリセット手順を送信しました"
       updated: "パスワードを変更しました"
     failure:
+      already_authenticated: "すでにログインしています"
+      unauthenticated: "ログインしてください"
       invalid: "ログインに失敗しました"
       not_saved: "アカウントの作成に失敗しました"
+      not_found_in_database: "無効な%{authentication_keys}またはパスワードです。" 
   errors:
     messages:
       not_saved:

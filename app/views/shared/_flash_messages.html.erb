@@ -1,8 +1,7 @@
 <% flash.each do |message_type, message| %>
-  <div class="mt-2">
-    <div class="px-4 py-2 text-sm rounded-md 
-                <%= message_type == 'success' ? 'bg-success text-success-content' : 'bg-error text-error-content' %>">
-      <%= message %>
+  <div class="alert <%= flash_background_class(message_type) %> shadow-lg mb-4">
+    <div>
+      <span><%= message %></span>
     </div>
   </div>
 <% end %>
