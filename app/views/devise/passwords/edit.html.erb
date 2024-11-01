@@ -1,17 +1,6 @@
 <h2 class="text-3xl font-bold text-center mb-6">新しいパスワードの設定</h2>
 
 <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-
-  <% if resource.errors.any? %>
-    <div class="alert alert-error mb-4">
-      <ul>
-        <% resource.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="form-control mb-4">
     <%= f.label :password, "新しいパスワード", class: "label" %>
     <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
