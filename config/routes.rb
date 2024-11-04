@@ -2,16 +2,16 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   devise_for :users,
-             path: '',
+             path: "",
              path_names: {
-               sign_up: '',
-               sign_in: 'login',
-               sign_out: 'logout',
-               registration: 'signup'
+               sign_up: "",
+               sign_in: "login",
+               sign_out: "logout",
+               registration: "signup"
              },
              controllers: {
-               registrations: 'users/registrations',
-               sessions: 'users/sessions'
+               registrations: "users/registrations",
+               sessions: "users/sessions"
              }
 
   resources :posts, only: %i[index]

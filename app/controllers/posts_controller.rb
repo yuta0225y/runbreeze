@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  
   def index
     @posts = Post.includes(:user).all
 
@@ -9,7 +8,7 @@ class PostsController < ApplicationController
     end
 
     # カテゴリフィルタ
-    if params[:category].present? && params[:category] != 'All'
+    if params[:category].present? && params[:category] != "All"
       @posts = @posts.where(category_id: params[:category])
     end
 
