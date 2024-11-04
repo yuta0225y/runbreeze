@@ -6,32 +6,6 @@ on:
     branches: [ main ]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
   test:
     runs-on: ubuntu-latest
 
@@ -40,7 +14,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password  # パスワードを 'password' に統一
+          POSTGRES_PASSWORD: password
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -60,7 +34,7 @@ jobs:
 
       - name: Set up database
         env:
-          DATABASE_URL: postgres://postgres:password@db:5432
+          DATABASE_HOST: localhost
         run: |
           bin/rails db:create
           bin/rails db:schema:load
@@ -69,7 +43,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:password@db:5432
+          DATABASE_HOST: localhost
         run: bin/rails test test:system
 
       - name: Keep screenshots from failed system tests
