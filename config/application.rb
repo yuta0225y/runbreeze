@@ -33,6 +33,6 @@ Bundler.require(*Rails.groups)
 
       # Locale and timezone settings
       config.i18n.default_locale = :ja
-      config.time_zone = 'Tokyo'
+      config.time_zone = "Tokyo"
     end
   end
