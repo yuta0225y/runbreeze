@@ -1,11 +1,11 @@
 <div class="btm-nav btm-nav-lg">
 
-  <%= link_to "", class: "flex flex-col items-center btm-nav-item" do %>
+  <%= link_to posts_path, class: "flex flex-col items-center btm-nav-item" do %>
     <%= image_tag 'home_button.svg', alt: "Home", class: "h-5 w-5" %>
     <span class="btm-nav-label">投稿一覧</span>
   <% end %>
 
-  <%= link_to "", class: "flex flex-col items-center btm-nav-item active" do %>
+  <%= link_to new_post_path, class: "flex flex-col items-center btm-nav-item active" do %>
     <%= image_tag 'create_button.svg', alt: "Create", class: "h-5 w-5" %>
     <span class="btm-nav-label">投稿する</span>
   <% end %>

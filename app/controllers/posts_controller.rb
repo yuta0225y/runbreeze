@@ -1,22 +1,37 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @posts = Post.includes(:user).all
 
-    # 検索機能
     if params[:search].present?
       @posts = @posts.where("title ILIKE ?", "%#{params[:search]}%")
     end
 
-    # カテゴリフィルタ
     if params[:category].present? && params[:category] != "All"
       @posts = @posts.where(category_id: params[:category])
     end
 
-    # カテゴリ一覧を取得（ビューで表示するため）
     @categories = Post.select(:category_id).distinct.pluck(:category_id)
   end
 
-  # def show
-  #   @post = Post.find(params[:id])
-  # end
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = current_user.posts.build(post_params)
+    if @post.save
+      redirect_to posts_path, notice: "投稿しました"
+    else
+      flash.now[:danger] = "投稿に失敗しました"
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :content, :category_id, :image, :ai_corrected_content, :reference_url, tag_ids: [])
+  end  
 end
