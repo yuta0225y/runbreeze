@@ -16,6 +16,11 @@ class PostsController < ApplicationController
     @categories = Post.select(:category_id).distinct.pluck(:category_id)
   end
 
+  def new
+    @post = Post.new
+  end
+
+
   # def show
   #   @post = Post.find(params[:id])
   # end
