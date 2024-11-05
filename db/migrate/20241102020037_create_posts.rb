@@ -8,6 +8,7 @@ class CreatePosts < ActiveRecord::Migration[7.2]
       t.integer :status, null: false
       t.string :image
       t.text :ai_corrected_content
+      t.string :reference_url 
       t.timestamps
     end
   end
