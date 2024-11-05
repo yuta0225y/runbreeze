@@ -7,36 +7,22 @@
   </div>
 
   <div class="form-control">
-    <label class="label">カテゴリーを選択してください</label>
-    <div class="flex space-x-4">
-      <% Category.all.each do |category| %>
-        <label class="cursor-pointer label">
-          <%= form.radio_button :category_id, category.id, class: "radio" %>
-          <span class="ml-2 text-sm"><%= category.name %></span>
-        </label>
-      <% end %>
-    </div>
+  <label class="label">カテゴリーを選択してください</label>
+  <div class="flex space-x-4">
+    <% Category.all.each do |category| %>
+      <label class="cursor-pointer label">
+        <%= form.radio_button :category_id, category.id, class: "radio category-radio", data: { category_id: category.id } %>
+        <span class="ml-2 text-sm"><%= category.name %></span>
+      </label>
+    <% end %>
   </div>
+</div>
 
-  <div class="form-control">
-    <label class="label">タグを選択してください</label>
-    <div class="flex flex-wrap space-x-4">
-      <% Tag.all.each do |tag| %>
-        <label class="cursor-pointer label">
-          <%= form.check_box :tag_ids, { multiple: true }, tag.id, nil, class: "checkbox" %>
-          <span class="ml-2 text-sm"><%= tag.name %></span>
-        </label>
-      <% end %>
-    </div>
-  </div>
 
   <div class="form-control">
     <%= form.text_area :content, placeholder: "本文を入力してください", class: "textarea textarea-bordered w-full h-40" %>
   </div>
 
-  <div class="form-control">
-    <button type="button" id="ai-correction-button" class="btn btn-primary w-full">AI校正をする</button>
-  </div>
 
   <div class="form-control">
     <%= form.file_field :image, class: "file-input file-input-bordered w-full" %>
@@ -48,15 +34,7 @@
   </div>
 
   <div class="form-control flex space-x-4">
-    <%= link_to "キャンセル", root_path, class: "btn btn-secondary flex-1" %>
-    <%= form.submit "下書き保存", name: "draft", class: "btn btn-outline flex-1" %>
+    <%= link_to "キャンセル", posts_path, class: "btn btn-secondary flex-1" %>
     <%= form.submit "投稿する", class: "btn btn-primary flex-1" %>
   </div>
 <% end %>
-
-<script>
-  document.getElementById("ai-correction-button").addEventListener("click", function() {
-    // モーダルでAI校正結果を表示する処理をここに追加します
-    alert("AI校正を実行しました。");
-  });
-</script>
