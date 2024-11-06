@@ -33,5 +33,5 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :content, :category_id, :image, :ai_corrected_content, :reference_url, tag_ids: [])
-  end  
+  end
 end
