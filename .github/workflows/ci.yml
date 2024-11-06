@@ -8,14 +8,17 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
 
@@ -24,32 +27,34 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
   test:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_HOST: db  # ジョブ全体でDATABASE_HOSTを設定
 
     services:
-      db:
-        image: postgres:14  # 安定したバージョンを指定
+      postgres:
+        image: postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
+      # redis:
+      #   image: redis
+      #   ports:
+      #     - 6379:6379
+      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Install packages
@@ -64,28 +69,12 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          until pg_isready -h db -U postgres; do
-            echo "Waiting for PostgreSQL..."
-            sleep 1
-          done
-
-      - name: Check DB connectivity
-        run: |
-          ping -c 3 db
-          nslookup db
-
-      - name: Set up database
-        run: |
-          bin/rails db:create --trace
-          bin/rails db:schema:load --trace
-          bin/rails db:test:prepare --trace
-
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bin/rails test test:system
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          # REDIS_URL: redis://localhost:6379/0
+        run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
