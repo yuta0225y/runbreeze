@@ -17,11 +17,18 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @standard_tags = Tag.standard
+    @category_specific_tags = Category.includes(:tag).where(tag_type: :category_specific)
   end
 
   def create
     @post = current_user.posts.build(post_params)
+
     if @post.save
+      # タグの関連付け
+      if params[:post][:tag_ids].present?
+        @post.tag_ids = params[:post][:tag_ids]
+      end
       redirect_to posts_path, notice: "投稿しました"
     else
       flash.now[:danger] = "投稿に失敗しました"
