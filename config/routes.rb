@@ -15,6 +15,11 @@ Rails.application.routes.draw do
              }
 
   resources :posts, only: %i[index new create]
+  resources :tags, only: %i[] do
+    collection do
+      get :by_category, to: "tags#by_category"
+    end
+  end
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
