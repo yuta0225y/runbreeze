@@ -8,13 +8,17 @@
 
   <div class="form-control">
   <label class="label">カテゴリーを選択してください</label>
-  <div class="flex space-x-4">
+  <div class="carousel carousel-center space-x-4 overflow-x-auto relative">
+    <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white pointer-events-none"></div> <!-- 左の影 -->
     <% Category.all.each do |category| %>
-      <label class="cursor-pointer label">
-        <%= form.radio_button :category_id, category.id, class: "radio category-radio", data: { category_id: category.id } %>
-        <span class="ml-2 text-sm"><%= category.name %></span>
-      </label>
+      <div class="carousel-item">
+        <label class="cursor-pointer label">
+          <%= form.radio_button :category_id, category.id, class: "radio category-radio", data: { category_id: category.id } %>
+          <span class="ml-2 text-sm"><%= category.name %></span>
+        </label>
+      </div>
     <% end %>
+    <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white pointer-events-none"></div> <!-- 右の影 -->
   </div>
 </div>
 
