@@ -6,10 +6,11 @@
     <%= form.text_field :title, placeholder: "タイトルを入力してください", class: "input input-bordered w-full" %>
   </div>
 
+
   <div class="form-control">
   <label class="label">カテゴリーを選択してください</label>
-  <div class="carousel carousel-center space-x-4 overflow-x-auto relative">
-    <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white pointer-events-none"></div> <!-- 左の影 -->
+  <div class="carousel carousel-center space-x-4 overflow-x-auto relative" data-turbo="false">
+    <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white pointer-events-none"></div>
     <% Category.all.each do |category| %>
       <div class="carousel-item">
         <label class="cursor-pointer label">
@@ -18,7 +19,30 @@
         </label>
       </div>
     <% end %>
-    <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white pointer-events-none"></div> <!-- 右の影 -->
+    <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white pointer-events-none"></div>
+  </div>
+</div>
+
+<div class="form-control mt-4">
+  <label class="label">タグ（3つまで選択できます）</label>
+  <div class="carousel carousel-center space-x-4 overflow-x-auto relative">
+    <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white pointer-events-none"></div>
+    <% Tag.where(tag_type: :standard).each do |tag| %>
+      <span 
+        class="tag-button carousel-item px-3 py-1 bg-transparent text-gray-500 border border-gray-300 rounded-full cursor-pointer transition duration-200 ease-in-out"
+        data-tag-id="<%= tag.id %>">
+        #<%= tag.name %>
+      </span>
+    <% end %>
+    <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white pointer-events-none"></div>
+  </div>
+  <div id="selected-tags-container"></div>
+</div>
+
+<div class="form-control mt-4" id="category-specific-tags">
+  <div class="carousel carousel-center space-x-4 overflow-x-auto relative" id="category-tags-container">
+    <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white pointer-events-none"></div>
   </div>
 </div>
 
