@@ -7,4 +7,6 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 30 }
   validates :content, presence: true, length: { maximum: 1000 }
   validates :category_id, presence: true
+
+  mount_uploader :post_image, PostImageUploader
 end
