@@ -3,8 +3,8 @@ source "https://rubygems.org"
 # ユーザー認証用
 gem "devise"
 
-gem 'carrierwave', '~> 3.0'
-gem 'rmagick', '~> 6.0', '>= 6.0.1'
+gem "carrierwave", "~> 3.0"
+gem "rmagick", "~> 6.0", ">= 6.0.1"
 
 gem "rails-i18n"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
