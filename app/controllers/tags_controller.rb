@@ -1,10 +1,25 @@
+# app/controllers/tags_controller.rb
 class TagsController < ApplicationController
-  def by_category
-    # パラメーターからカテゴリーIDを取得し、それに対応するタグを取得
-    category_id = params[:category_id]
-    tags = Tag.where(category_id: category_id, tag_type: :category_specific)
+  before_action :authenticate_user! # 必要に応じて認証を追加
 
-    # JSON形式でタグ情報を返す
-    render json: tags.select(:id, :name)
+  def by_category
+    category_id = params[:category_id]
+
+    if category_id.blank?
+      render json: { error: "カテゴリーIDが指定されていません。" }, status: :bad_request
+      return
+    end
+
+    category = Category.find_by(id: category_id)
+
+    unless category
+      render json: { error: "指定されたカテゴリーが存在しません。" }, status: :not_found
+      return
+    end
+
+    tags = category.tags.where(tag_type: :category_specific)
+
+    # タグの種類情報も含めて返す
+    render json: tags.select(:id, :name, :tag_type)
   end
 end
