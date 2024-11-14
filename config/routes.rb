@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     collection do
       get :by_category
     end
-  end  
+  end
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
