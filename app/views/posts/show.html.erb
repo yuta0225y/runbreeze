@@ -1,6 +1,10 @@
 <div class="container mx-auto px-4 py-8">
   <div class="flex items-center mb-4">
-    <%= image_tag @post.user.profile_image.url, alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" if @post.user.profile_image.present? %>
+    <% if @post.user.profile_image.present? %>
+      <%= image_tag @post.user.profile_image.url, alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
+    <% else %>
+      <%= image_tag "default_profile_image.svg", alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
+    <% end %>
     <div>
       <p class="text-sm font-semibold"><%= @post.user.username %></p>
       <p class="text-xs text-gray-500"><%= @post.created_at.strftime("%Y年%m月%d日") %></p>
@@ -11,12 +15,14 @@
     <% if @post.post_image.present? %>
       <%= image_tag @post.post_image.url, alt: @post.title, class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
     <% else %>
-      <%= image_tag 'placeholder_image.jpg', alt: "No Image", class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
+      <%= image_tag 'default_post_image.jpg', alt: "No Image", class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
     <% end %>
 
-    <div class="absolute top-2 left-2 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full shadow-lg">
-      <%= @post.category.name %>
-    </div>
+    <% if @post.category.present? %>
+      <div class="absolute top-2 left-2 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full shadow-lg">
+        <%= @post.category.name %>
+      </div>
+    <% end %>
   </div>
   
   <div class="flex items-center justify-between mb-4">
@@ -49,9 +55,16 @@
   <h3 class="text-md font-semibold mb-2">コメント</h3>
   <div class="space-y-2 mb-4 text-sm text-gray-700">
     <% @comments.each do |comment| %>
-      <div>
-        <span class="font-semibold"><%= comment.user.username %>:</span>
-        <span><%= comment.content %></span>
+      <div class="flex items-center mb-2">
+        <% if comment.user.profile_image.present? %>
+          <%= image_tag comment.user.profile_image.url, alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
+        <% else %>
+          <%= image_tag "default_profile_image.svg", alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
+        <% end %>
+        <div>
+          <span class="font-semibold"><%= comment.user.username %>:</span>
+          <span><%= comment.content %></span>
+        </div>
       </div>
     <% end %>
   </div>
