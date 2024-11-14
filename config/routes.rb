@@ -14,7 +14,10 @@ Rails.application.routes.draw do
                sessions: "users/sessions"
              }
 
-  resources :posts, only: %i[index new create]
+  resources :posts, only: %i[index new create show] do
+    resources :comments, only: %i[create], shallow: true
+  end
+
   resources :tags, only: %i[] do
     collection do
       get :by_category, to: "tags#by_category"
