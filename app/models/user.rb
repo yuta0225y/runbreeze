@@ -8,4 +8,5 @@ class User < ApplicationRecord
 
   # Userが削除されたときに関連するPostも削除される
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end
