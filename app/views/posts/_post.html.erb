@@ -4,6 +4,8 @@
     <div class="w-1/4 relative mr-4">
       <% if post.post_image.present? %>
         <%= image_tag(post.post_image.url, alt: post.title, class: "w-full h-full object-cover aspect-square") %>
+      <% else %>
+        <%= image_tag("default_post_image.jpg", alt: post.title, class: "w-full h-full object-cover aspect-square") %>
       <% end %>
 
       <% if post.category.present? %>
@@ -32,7 +34,11 @@
       <div class="flex items-center justify-between mt-2">
         <!-- ユーザーアイコンと名前 -->
         <div class="flex items-center">
-          <%= image_tag(post.user.profile_image.url, alt: post.user.username, class: "w-8 h-8 rounded-full mr-2") if post.user.profile_image.present? %>
+          <% if post.user.profile_image.present? %>
+            <%= image_tag(post.user.profile_image.url, alt: post.user.username, class: "w-8 h-8 rounded-full") %>
+          <% else %>
+            <%= image_tag("default_profile_image.svg", alt: post.user.username, class: "w-8 h-8 rounded-full") %>
+          <% end %>
           <span class="text-sm text-gray-700"><%= post.user.username %></span>
         </div>
         
