@@ -9,13 +9,13 @@
     </form>
   </div>
 
-  <!-- カテゴリタブ -->
-  <div class="flex justify-center mb-6">
-    <%= link_to 'すべて', posts_path, class: "btn btn-outline #{'btn-active' if params[:category].blank? || params[:category] == 'All'} mr-2" %>
-    <% @categories.each do |category| %>
-      <%= link_to category, posts_path(category: category), class: "btn btn-outline #{'btn-active' if params[:category] == category} mr-2" %>
-    <% end %>    
-  </div>
+
+  <div class="flex justify-center mb-6 space-x-2">
+  <%= link_to 'すべて', posts_path, class: "btn btn-outline #{'btn-active' if params[:category].blank? || params[:category] == 'All'}" %>
+  <% @categories.each do |category| %>
+    <%= link_to category, posts_path(category: category), class: "btn btn-outline #{'btn-active' if params[:category] == category}" %>
+  <% end %>    
+</div>
 
   <!-- 投稿一覧 -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
