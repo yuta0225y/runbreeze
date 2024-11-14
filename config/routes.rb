@@ -14,15 +14,15 @@ Rails.application.routes.draw do
                sessions: "users/sessions"
              }
 
-  resources :posts, only: %i[index new create show] do
+  resources :posts do
     resources :comments, only: %i[create], shallow: true
   end
 
-  resources :tags, only: %i[] do
+  resources :tags, only: [] do
     collection do
-      get :by_category, to: "tags#by_category"
+      get :by_category
     end
-  end
+  end  
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
