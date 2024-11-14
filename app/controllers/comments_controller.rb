@@ -5,9 +5,9 @@ class CommentsController < ApplicationController
     @comment.user = current_user # 現在のユーザーをコメントの作成者として設定
 
     if @comment.save
-      redirect_to post_path(@post), notice: 'コメントが追加されました。'
+      redirect_to post_path(@post), notice: "コメントが追加されました。"
     else
-      redirect_to post_path(@post), alert: 'コメントの追加に失敗しました。'
+      redirect_to post_path(@post), alert: "コメントの追加に失敗しました。"
     end
   end
 
