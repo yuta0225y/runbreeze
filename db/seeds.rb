@@ -1,14 +1,4 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
-# カテゴリーとカテゴリー専用タグ
+# カテゴリーとカテゴリー専用タグの作成
 categories = {
   "トレーニング" => [ "ジョギング", "筋トレ", "ストレッチ", "インターバル", "ビルドアップ", "スピードトレーニング" ],
   "栄養・食事" => [ "食事", "栄養", "サプリメント", "レシピ", "ダイエット", "水分補給", "カロリー" ],
@@ -25,9 +15,38 @@ categories.each do |category_name, tags_names|
   end
 end
 
-# 標準タグを作成（すべてのカテゴリーで共通）
+# 標準タグの作成
 standard_tags = [ "初心者", "おすすめ", "ヒント", "失敗談", "ベストプラクティス" ]
 
 standard_tags.each do |name|
   Tag.find_or_create_by(name: name, tag_type: :standard)
+end
+
+# ダミーユーザーと投稿の作成
+require 'faker'
+
+Faker::Config.locale = 'ja'
+
+5.times do
+  user = User.create!(
+    username: Faker::Name.name,  # 日本語の名前を生成
+    email: Faker::Internet.email,
+    password: "password",
+    password_confirmation: "password"
+  )
+
+  # 各ユーザーに投稿を生成
+  custom_words = [ "ランニング", "トレーニング", "栄養", "ストレッチ", "健康" ]
+
+  10.times do
+    post = user.posts.create!(
+      title: custom_words.sample,  # カスタム単語からランダムにタイトルを選択
+      content: "#{Faker::Lorem.paragraph} 〜 #{custom_words.sample}に関する投稿",
+      category: Category.order("RANDOM()").first,
+      post_image: Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'fitness', 'jogging' ])
+    )
+
+    # 投稿にランダムなタグを追加
+    post.tag_ids = Tag.pluck(:id).sample(3)
+  end
 end

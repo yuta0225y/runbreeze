@@ -12,6 +12,14 @@ class Post < ApplicationRecord
 
   mount_uploader :post_image, PostImageUploader
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[title category_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[user tags category]
+  end
+
   def tag_selection_limit
     if tags.size > 3
       errors.add(:tags, "は3つまで選択できます")
