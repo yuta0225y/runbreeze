@@ -9,4 +9,9 @@ class User < ApplicationRecord
   # Userが削除されたときに関連するPostも削除される
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+
+  # Ransackで検索可能な属性を指定
+  def self.ransackable_attributes(auth_object = nil)
+    %w[username]
+  end
 end
