@@ -4,10 +4,9 @@ class PostsController < ApplicationController
   before_action :set_tags, only: [:new, :edit, :update]
 
   def index
-    @posts = Post.includes(:user).order(created_at: :desc) 
-    @posts = @posts.where("title ILIKE ?", "%#{params[:search]}%") if params[:search].present?
-    @posts = @posts.where(category_id: params[:category]) if params[:category].present? && params[:category] != "All"
-    @categories = Category.all.pluck(:id, :name)
+    @q = Post.ransack(params[:q])
+    @posts = @q.result(distinct: true).includes(:tags, :user, :category)#.page(params[:page])
+    @categories = Category.all
   end 
 
   def new
