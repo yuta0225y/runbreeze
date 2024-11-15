@@ -116,6 +116,8 @@ GEM
       warden (~> 1.2.3)
     drb (2.2.1)
     erubi (1.13.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -337,6 +339,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise
+  faker
   jbuilder
   jsbundling-rails
   pg (~> 1.1)
