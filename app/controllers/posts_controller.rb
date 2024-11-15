@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :set_tags, only: [:new, :edit, :update]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :set_post, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_tags, only: [ :new, :edit, :update ]
 
   def index
     @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).includes(:tags, :user, :category)#.page(params[:page])
+    @posts = @q.result(distinct: true).includes(:tags, :user, :category)# .page(params[:page])
     @categories = Category.all
-  end 
+  end
 
   def new
     @post = Post.new
@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = action_name == 'show' ? Post.find(params[:id]) : current_user.posts.find(params[:id])
+    @post = action_name == "show" ? Post.find(params[:id]) : current_user.posts.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to posts_path, alert: "投稿が見つかりませんでした"
   end

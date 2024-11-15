@@ -16,7 +16,7 @@ categories.each do |category_name, tags_names|
 end
 
 # 標準タグの作成
-standard_tags = ["初心者", "おすすめ", "ヒント", "失敗談", "ベストプラクティス"]
+standard_tags = [ "初心者", "おすすめ", "ヒント", "失敗談", "ベストプラクティス" ]
 
 standard_tags.each do |name|
   Tag.find_or_create_by(name: name, tag_type: :standard)
@@ -25,7 +25,7 @@ end
 # ダミーユーザーと投稿の作成
 require 'faker'
 
-Faker::Config.locale = 'ja' 
+Faker::Config.locale = 'ja'
 
 5.times do
   user = User.create!(
@@ -36,14 +36,14 @@ Faker::Config.locale = 'ja'
   )
 
   # 各ユーザーに投稿を生成
-  custom_words = ["ランニング", "トレーニング", "栄養", "ストレッチ", "健康"]
+  custom_words = [ "ランニング", "トレーニング", "栄養", "ストレッチ", "健康" ]
 
   10.times do
     post = user.posts.create!(
       title: custom_words.sample,  # カスタム単語からランダムにタイトルを選択
       content: "#{Faker::Lorem.paragraph} 〜 #{custom_words.sample}に関する投稿",
       category: Category.order("RANDOM()").first,
-      post_image: Faker::LoremFlickr.image(size: "300x300", search_terms: ['fitness', 'jogging'])
+      post_image: Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'fitness', 'jogging' ])
     )
 
     # 投稿にランダムなタグを追加
