@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
   def index
     @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).includes(:tags, :user, :category)# .page(params[:page])
+    @posts = @q.result(distinct: true).includes(:tags, :user, :category).page(params[:page]).per(6)
     @categories = Category.all
   end
 
