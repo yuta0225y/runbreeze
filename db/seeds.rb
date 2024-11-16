@@ -24,30 +24,32 @@ end
 
 # ダミーユーザーと投稿の作成
 if Rails.env.development? || Rails.env.test?
-require 'faker'
+  require 'faker'
 
-Faker::Config.locale = 'ja'
+  Faker::Config.locale = 'ja'
 
-5.times do
-  user = User.create!(
-    username: Faker::Name.name,  # 日本語の名前を生成
-    email: Faker::Internet.email,
-    password: "password",
-    password_confirmation: "password"
-  )
-
-  # 各ユーザーに投稿を生成
-  custom_words = [ "ランニング", "トレーニング", "栄養", "ストレッチ", "健康" ]
-
-  10.times do
-    post = user.posts.create!(
-      title: custom_words.sample,  # カスタム単語からランダムにタイトルを選択
-      content: "#{Faker::Lorem.paragraph} 〜 #{custom_words.sample}に関する投稿",
-      category: Category.order("RANDOM()").first,
-      post_image: Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'fitness', 'jogging' ])
+  5.times do
+    user = User.create!(
+      username: Faker::Name.name,  # 日本語の名前を生成
+      email: Faker::Internet.email,
+      password: "password",
+      password_confirmation: "password"
     )
 
-    # 投稿にランダムなタグを追加
-    post.tag_ids = Tag.pluck(:id).sample(3)
+    # 各ユーザーに投稿を生成
+    custom_words = [ "ランニング", "トレーニング", "栄養", "ストレッチ", "健康" ]
+
+    10.times do
+      post = user.posts.create!(
+        title: custom_words.sample,  # カスタム単語からランダムにタイトルを選択
+        content: "#{Faker::Lorem.paragraph} 〜 #{custom_words.sample}に関する投稿",
+        category: Category.order("RANDOM()").first,
+        post_image: Faker::LoremFlickr.image(size: "300x300", search_terms: [ 'fitness', 'jogging' ])
+      )
+
+      # 投稿にランダムなタグを追加
+      post.tag_ids = Tag.pluck(:id).sample(3)
+    end
   end
 end
+
