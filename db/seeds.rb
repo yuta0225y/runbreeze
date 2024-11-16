@@ -23,6 +23,7 @@ standard_tags.each do |name|
 end
 
 # ダミーユーザーと投稿の作成
+if Rails.env.development? || Rails.env.test?
 require 'faker'
 
 Faker::Config.locale = 'ja'
