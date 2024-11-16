@@ -8,7 +8,7 @@ gem "rmagick", "~> 6.0", ">= 6.0.1"
 
 gem "ransack"
 
-gem 'kaminari'
+gem "kaminari"
 
 gem "rails-i18n"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
