@@ -5,6 +5,13 @@ module.exports = {
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js'
   ],
+  theme: {
+    extends: {
+      zIndex: {
+        '10000': '10000',
+      },
+    },
+  },
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
