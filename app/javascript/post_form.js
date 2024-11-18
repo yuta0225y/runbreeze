@@ -6,23 +6,12 @@ document.addEventListener("turbo:load", () => {
   const tagSelectionFeedback = document.getElementById("tag-selection-feedback");
   const categoryContainer = document.getElementById("category-container");
   const selectedCategoryInput = document.getElementById("selected-category-id");
-  
-  if (!selectedCategoryInput) {
-    console.error('Element with ID "selected-category-id" not found.');
-    return; // 必要に応じて早期リターン
-  }
-  
   let selectedCategoryId = selectedCategoryInput.value;
-
-  if (!selectedTagsContainer) {
-    console.error('Element with ID "selected-tags-container" not found.');
-    return;
-  }
 
   // 初期選択されているタグIDを配列として取得（文字列として）
   let selectedTagIds = Array.from(selectedTagsContainer.querySelectorAll("input[name='post[tag_ids][]']")).map(input => input.value.toString());
 
-  // 残りのコードも同様に、各コンテナが存在するか確認してからイベントリスナーを設定
+  // タグボタンのクリックイベントをタグコンテナに設定
   [standardTagsContainer, categoryTagsContainer].forEach(container => {
     if (container) {
       container.addEventListener("click", (event) => {
@@ -30,30 +19,141 @@ document.addEventListener("turbo:load", () => {
           toggleTagSelection(event.target);
         }
       });
-    } else {
-      console.warn('One of the tag containers is not found.');
     }
   });
 
+  // カテゴリーボタンのクリックイベントをカテゴリーコンテナに設定
   if (categoryContainer) {
     categoryContainer.addEventListener("click", (event) => {
       if (event.target.classList.contains("category-button")) {
         selectCategory(event.target);
       }
     });
-  } else {
-    console.warn('Category container not found.');
   }
 
-  // 以下の関数内でも同様に要素の存在を確認
-  // 例: loadCategorySpecificTags 内の categoryTagsContainer
-  async function loadCategorySpecificTags(categoryId) {
-    if (!categoryTagsContainer) {
-      console.error('Category tags container not found.');
-      showFeedback("タグコンテナが見つかりませんでした。");
-      return;
+  // タグの選択状態を切り替える関数
+  function toggleTagSelection(tagButton) {
+    const tagId = tagButton.dataset.tagId.toString();
+
+    if (selectedTagIds.includes(tagId)) {
+      // タグを選択解除
+      selectedTagIds = selectedTagIds.filter(id => id !== tagId);
+      updateTagButtonState(tagButton, false);
+    } else {
+      if (selectedTagIds.length >= 3) {
+        // 最大選択数に達した場合のフィードバック（UI上に表示）
+        showFeedback("タグは最大3つまで選択できます。");
+        return;
+      }
+      // タグを選択
+      selectedTagIds.push(tagId);
+      updateTagButtonState(tagButton, true);
     }
 
+    // 隠しフィールドを更新
+    updateSelectedTags();
+    // 選択数を更新
+    updateCount();
+    // フィードバックメッセージをクリア
+    hideFeedback();
+  }
+
+  // タグボタンの状態を更新する関数
+  function updateTagButtonState(tagButton, isSelected) {
+    if (isSelected) {
+      tagButton.classList.add("badge-primary");
+      tagButton.classList.remove("badge-neutral");
+      tagButton.setAttribute("aria-pressed", "true");
+    } else {
+      tagButton.classList.remove("badge-primary");
+      tagButton.classList.add("badge-neutral");
+      tagButton.setAttribute("aria-pressed", "false");
+    }
+  }
+
+  // 隠しフィールドを更新する関数
+  function updateSelectedTags() {
+    // 既存のhidden fieldsをクリア
+    selectedTagsContainer.innerHTML = "";
+
+    // 選択されたタグIDをhidden fieldとして追加
+    selectedTagIds.forEach(id => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "post[tag_ids][]";
+      input.value = id;
+      selectedTagsContainer.appendChild(input);
+    });
+  }
+
+  // 選択数を更新する関数
+  function updateCount() {
+    if (selectedTagsCount) {
+      selectedTagsCount.textContent = selectedTagIds.length;
+    }
+  }
+
+  // フィードバックメッセージを表示する関数
+  function showFeedback(message) {
+    if (tagSelectionFeedback) {
+      tagSelectionFeedback.textContent = message;
+      tagSelectionFeedback.classList.remove("hidden");
+    }
+  }
+
+  // フィードバックメッセージを非表示にする関数
+  function hideFeedback() {
+    if (tagSelectionFeedback) {
+      tagSelectionFeedback.textContent = "";
+      tagSelectionFeedback.classList.add("hidden");
+    }
+  }
+
+  // タグボタンの初期選択状態を反映する関数
+  function initializeTagButtons() {
+    document.querySelectorAll(".tag-button").forEach(button => {
+      const tagId = button.dataset.tagId.toString();
+      if (selectedTagIds.includes(tagId)) {
+        updateTagButtonState(button, true);
+      } else {
+        updateTagButtonState(button, false);
+      }
+    });
+  }
+
+  // カテゴリーボタンの選択状態を切り替える関数
+  function selectCategory(categoryButton) {
+    const categoryId = categoryButton.dataset.categoryId;
+
+    // 選択状態を更新
+    selectedCategoryId = categoryId;
+    selectedCategoryInput.value = categoryId;
+
+    // 全てのカテゴリーボタンの状態をリセット
+    document.querySelectorAll(".category-button").forEach(btn => {
+      updateCategoryButtonState(btn, false);
+    });
+
+    // 選択されたカテゴリーボタンの状態を更新
+    updateCategoryButtonState(categoryButton, true);
+
+    // カテゴリー専用タグを読み込む
+    loadCategorySpecificTags(categoryId);
+  }
+
+  // カテゴリーボタンの状態を更新する関数
+  function updateCategoryButtonState(categoryButton, isSelected) {
+    if (isSelected) {
+      categoryButton.classList.add("badge-primary");
+      categoryButton.classList.remove("badge-neutral");
+    } else {
+      categoryButton.classList.remove("badge-primary");
+      categoryButton.classList.add("badge-neutral");
+    }
+  }
+
+  // カテゴリー専用タグを取得して表示する関数
+  async function loadCategorySpecificTags(categoryId) {
     try {
       // サーバーから該当カテゴリーのタグを取得
       const response = await fetch(`/tags/by_category?category_id=${categoryId}`);
@@ -82,13 +182,6 @@ document.addEventListener("turbo:load", () => {
         categoryTagsContainer.appendChild(tagButton);
       });
 
-      // タグボタンのイベントリスナーを再設定（新たに追加されたタグにも対応）
-      categoryTagsContainer.addEventListener("click", (event) => {
-        if (event.target.classList.contains("tag-button")) {
-          toggleTagSelection(event.target);
-        }
-      });
-
       // 選択数を更新
       updateCount();
       // フィードバックメッセージをクリア
@@ -100,14 +193,8 @@ document.addEventListener("turbo:load", () => {
     }
   }
 
-  // 他の関数内でも同様のチェックを追加
-  // 例: resetCategorySpecificTags
+  // カテゴリー変更時にカテゴリー専用タグをリセットする関数
   function resetCategorySpecificTags() {
-    if (!categoryTagsContainer) {
-      console.error('Category tags container not found.');
-      return;
-    }
-
     // カテゴリー専用タグコンテナ内のタグボタンを全て削除
     const categoryTagButtons = categoryTagsContainer.querySelectorAll(".tag-button");
     categoryTagButtons.forEach(tagButton => {
@@ -131,7 +218,7 @@ document.addEventListener("turbo:load", () => {
     hideFeedback();
   }
 
-  // その他の初期化関数も同様にチェックを追加
+  // タグボタンの初期選択状態を反映する関数
   function initializeTagButtons() {
     document.querySelectorAll(".tag-button").forEach(button => {
       const tagId = button.dataset.tagId.toString();
@@ -143,6 +230,7 @@ document.addEventListener("turbo:load", () => {
     });
   }
 
+  // カテゴリーボタンの初期選択状態を反映する関数
   function initializeCategoryButtons() {
     document.querySelectorAll(".category-button").forEach(button => {
       const categoryId = button.dataset.categoryId;
