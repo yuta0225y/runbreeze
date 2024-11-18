@@ -18,12 +18,12 @@
   </head>
 
   <body>
-  <%= render 'shared/flash_messages' %>
   <% if user_signed_in? %>
     <%= render 'shared/after_header_login' %>
   <% else %>
     <%= render 'shared/before_header_login' %>
   <% end %>
+  <%= render 'shared/flash_messages' %>
   <%= yield %>
   <%= render "shared/footer" %>
   </body>
