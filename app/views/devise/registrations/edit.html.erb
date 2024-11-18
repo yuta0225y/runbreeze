@@ -13,6 +13,12 @@
 
   <h3 class="text-xl font-semibold mb-2">パスワードの変更</h3>
 
+  <div class="form-control mb-6">
+    <%= f.label :current_password, "現在のパスワード", class: "label" %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+    <small class="text-gray-500">アカウント情報を更新するには現在のパスワードが必要です。</small>
+  </div>
+
   <div class="form-control mb-4">
     <%= f.label :password, "新しいパスワード", class: "label" %>
     <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
@@ -22,12 +28,6 @@
   <div class="form-control mb-6">
     <%= f.label :password_confirmation, "新しいパスワードの確認", class: "label" %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
-  </div>
-
-  <div class="form-control mb-6">
-    <%= f.label :current_password, "現在のパスワード", class: "label" %>
-    <%= f.password_field :current_password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
-    <small class="text-gray-500">アカウント情報を更新するには現在のパスワードが必要です。</small>
   </div>
 
   <div class="form-control">
