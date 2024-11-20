@@ -3,11 +3,17 @@ source "https://rubygems.org"
 # ユーザー認証用
 gem "devise"
 
+# 画像アップロード用
 gem "carrierwave", "~> 3.0"
 gem "rmagick", "~> 6.0", ">= 6.0.1"
 
+#amazons3
+gem "fog-aws"
+
+# 検索用
 gem "ransack"
 
+# ページネーション用
 gem "kaminari"
 
 gem "rails-i18n"
@@ -58,6 +64,9 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "faker"
+
+  # 環境変数用
+  gem "dotenv-rails"
 end
 
 group :development do
