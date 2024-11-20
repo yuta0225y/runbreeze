@@ -7,7 +7,7 @@ gem "devise"
 gem "carrierwave", "~> 3.0"
 gem "rmagick", "~> 6.0", ">= 6.0.1"
 
-#amazons3
+# amazons3
 gem "fog-aws"
 
 # 検索用
