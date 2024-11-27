@@ -5,7 +5,7 @@ class LikesController < ApplicationController
     @likes = current_user.likes.includes(:post).order(created_at: :desc).page(params[:page]).per(6)
     @posts = @likes.map(&:post).compact
   end
-  
+
   def create
     @post = Post.find(params[:post_id])
     like = current_user.likes.new(post: @post)

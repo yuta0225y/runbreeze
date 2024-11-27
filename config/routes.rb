@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     collection do
       get :bookmarked_posts
     end
-    
+
     resources :likes, only: %i[create destroy]
   end
 
