@@ -1,3 +1,3 @@
-<%= button_to bookmark_path(current_user.bookmarks.find_by(post: post)), method: :delete, class: "p-1", onclick: "event.stopPropagation();" do %>
+<%= button_to bookmark_path(bookmark), method: :delete, class: "p-1", data: { turbo_method: :delete }, onclick: "event.stopPropagation();" do %>
   <%= image_tag 'bookmark_filled.svg', alt: "ブックマーク解除", class: "h-5 w-5" %>
 <% end %>
