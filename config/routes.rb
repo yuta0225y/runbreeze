@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bookmarks, only: %i[create destroy index] 
+  resources :bookmarks, only: %i[create destroy index]
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check

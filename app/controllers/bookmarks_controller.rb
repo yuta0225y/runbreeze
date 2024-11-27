@@ -23,5 +23,5 @@ class BookmarksController < ApplicationController
     else
       redirect_back fallback_location: posts_path, alert: "ブックマークの解除に失敗しました"
     end
-  end  
+  end
 end
