@@ -6,6 +6,8 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_users, through: :bookmarks, source: :user
+  has_many :likes, dependent: :destroy
+  has_many :like_users, through: :likes, source: :user
 
   validates :title, presence: true, length: { maximum: 30 }
   validates :content, presence: true, length: { maximum: 1000 }
@@ -28,8 +30,13 @@ class Post < ApplicationRecord
     end
   end
 
-  # ユーザーが投稿をブックマークしているかどうかを判定
+  # ブックマークしているかどうかを判定
   def bookmarked_by?(user)
     bookmarks.exists?(user_id: user.id)
+  end
+
+  # いいねしているかどうかを判定
+  def liked_by?(user)
+    likes.exists?(user_id: user.id)
   end
 end

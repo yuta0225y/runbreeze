@@ -11,12 +11,13 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_posts, through: :bookmarks, source: :post
+  has_many :likes, dependent: :destroy
+  has_many :like_posts, through: :likes, source: :post
 
   # Ransackで検索可能な属性を指定
   def self.ransackable_attributes(auth_object = nil)
     %w[username]
   end
-
 
   def bookmark(post)
     bookmark_posts << post
@@ -28,5 +29,17 @@ class User < ApplicationRecord
 
   def bookmark?(post)
     bookmark_posts.include?(post)
+  end
+
+  def like(post)
+    like_posts << post
+  end
+
+  def unlike(post)
+    like_posts.destroy(post)
+  end
+
+  def like?(post)
+    like_posts.include?(post)
   end
 end
