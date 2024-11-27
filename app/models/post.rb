@@ -4,6 +4,8 @@ class Post < ApplicationRecord
   has_many :post_tags, dependent: :destroy
   has_many :tags, through: :post_tags
   has_many :comments, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmark_users, through: :bookmarks, source: :user
 
   validates :title, presence: true, length: { maximum: 30 }
   validates :content, presence: true, length: { maximum: 1000 }
@@ -24,5 +26,10 @@ class Post < ApplicationRecord
     if tags.size > 3
       errors.add(:tags, "は3つまで選択できます")
     end
+  end
+
+  # ユーザーが投稿をブックマークしているかどうかを判定
+  def bookmarked_by?(user)
+    bookmarks.exists?(user_id: user.id)
   end
 end
