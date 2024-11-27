@@ -1,3 +1,3 @@
-<%= button_to bookmarks_path(post_id: post.id), method: :post, class: "p-1", onclick: "event.stopPropagation();" do %>
+<%= button_to bookmarks_path(post_id: post.id), method: :post, class: "p-1", data: { turbo_method: :post }, onclick: "event.stopPropagation();" do %>
   <%= image_tag 'bookmark.svg', alt: "ブックマーク", class: "h-5 w-5" %>
 <% end %>
