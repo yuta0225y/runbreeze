@@ -1,0 +1,9 @@
+<turbo-frame id="bookmark_buttons_<%= post.id %>">
+  <% if post.bookmarked_by?(current_user) %>
+    <!-- ブックマーク解除ボタン -->
+    <%= render 'bookmarks/unbookmark', post: post, bookmark: current_user.bookmarks.find_by(post: post) %>
+  <% else %>
+    <!-- ブックマーク追加ボタン -->
+    <%= render 'bookmarks/bookmark', post: post %>
+  <% end %>
+</turbo-frame>
