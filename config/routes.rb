@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :comments, only: %i[create], shallow: true
+    collection do
+      get :bookmarked_posts
+    end
   end
 
   resources :tags, only: [] do
@@ -23,6 +26,8 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
+
+  resources :bookmarks, only: %i[create destroy index]
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
