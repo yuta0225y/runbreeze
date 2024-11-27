@@ -10,7 +10,8 @@
         </svg>
       </label>
       <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-        <li><%= link_to 'ブックマーク一覧', bookmarks_path, class: "btn btn-ghost w-full text-left" %></li>
+        <li><%= link_to 'ブックマークした投稿', bookmarks_path, class: "btn btn-ghost w-full text-left" %></li>
+        <li><%= link_to 'いいねした投稿', likes_path, class: "btn btn-ghost w-full text-left" %></li>
         <hr>
         <li><%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left" %></li>
         <hr>

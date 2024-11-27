@@ -32,7 +32,7 @@
   <!-- 投稿一覧 -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
     <% if @posts.present? %>
-      <%= render partial: 'posts/post', collection: @posts, as: :post %>
+      <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     <% else %>
       <p class="text-center text-neutral">投稿がありません。</p>
     <% end %>

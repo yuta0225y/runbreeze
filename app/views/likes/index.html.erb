@@ -1,16 +1,16 @@
 <div class="container mx-auto px-4 py-2 bg-base-100 pb-20" style="padding-top: 70px;">
-  <h1 class="text-2xl font-bold mb-4">ブックマークした投稿</h1>
+  <h1 class="text-2xl font-bold mb-4">いいねした投稿</h1>
 
   <% if @posts.present? %>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     </div>
   <% else %>
-    <p class="text-center text-neutral">ブックマークした投稿はありません。</p>
+    <p class="text-center text-neutral">いいねした投稿がありません。</p>
   <% end %>
 
   <!-- ページネーション -->
   <div class="mt-4 text-center">
-    <%= paginate @bookmarks %>
+    <%= paginate @likes %>
   </div>
 </div>

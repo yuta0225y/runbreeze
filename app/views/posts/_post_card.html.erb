@@ -1,5 +1,3 @@
-<!-- app/views/posts/_post.html.erb -->
-
 <%= link_to post_path(post), class: "block" do %>
   <div class="card bg-base-100 shadow-xl flex flex-row p-4">
     <!-- 画像とカテゴリー -->
@@ -32,7 +30,7 @@
       <!-- 内容（概要表示） -->
       <p class="text-sm text-gray-600 line-clamp-2 mt-1"><%= truncate(post.content, length: 100) %></p>
 
-      <!-- ユーザー情報とブックマークボタン -->
+      <!-- ユーザー情報とアクションボタン -->
       <div class="flex items-center justify-between mt-2">
         <!-- ユーザーアイコンと名前 -->
         <div class="flex items-center">
@@ -43,9 +41,12 @@
           <% end %>
           <span class="text-sm text-gray-700"><%= post.user.username %></span>
         </div>
-        
-        <!-- ブックマークボタン -->
-        <div class="flex items-center">
+
+        <!-- アクションボタン（いいね・ブックマーク） -->
+        <div class="flex items-center space-x-4">
+          <!-- いいねボタン -->
+          <%= render 'likes/like_buttons', post: post %>
+          <!-- ブックマークボタン -->
           <%= render 'bookmarks/bookmark_buttons', post: post %>
         </div>
       </div>

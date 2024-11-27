@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     collection do
       get :bookmarked_posts
     end
+
+    resources :likes, only: %i[create destroy]
   end
 
   resources :tags, only: [] do
@@ -28,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :bookmarks, only: %i[create destroy index]
-
+  resources :likes, only: %i[index]
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
 
