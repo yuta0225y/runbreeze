@@ -38,18 +38,23 @@
   <!-- アクションボタン（Like, Comment, Bookmark） -->
   <div class="flex items-center justify-between mb-4">
     <div class="flex space-x-4">
+
+      <!-- いいねボタン -->
       <button class="flex items-center space-x-1">
         <%= image_tag 'like.svg', alt: "Like", class: "h-5 w-5" %>
       </button>
+
+      <!-- コメントボタン -->
       <button class="flex items-center space-x-1">
         <%= image_tag 'comment.svg', alt: "Comment", class: "h-5 w-5" %>
         <span class="text-sm"><%= @comments.size %></span>
       </button>
     </div>
   
-    <button class="flex items-center space-x-1">
-      <%= image_tag 'bookmark.svg', alt: "Bookmark", class: "h-5 w-5" %>
-    </button>
+    <!-- ブックマークボタン -->
+    <div class="flex items-center">
+      <%= render 'bookmarks/bookmark_buttons', post: @post %>
+    </div>
   </div>  
   
   <!-- 投稿タイトル -->
