@@ -1,0 +1,12 @@
+<div class="flex items-center">
+  <% if post.liked_by?(current_user) %>
+    <!-- いいね解除ボタン -->
+    <%= render 'likes/unlike', post: post %>
+  <% else %>
+    <!-- いいね追加ボタン -->
+    <%= render 'likes/like', post: post %>
+  <% end %>
+  
+  <!-- いいね数の表示 -->
+  <span class="ml-1 text-sm text-gray-600"><%= post.likes.count %></span>
+</div>
