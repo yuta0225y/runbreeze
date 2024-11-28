@@ -1,3 +1,3 @@
-<%= button_to post_likes_path(post), method: :post, class: "p-1", onclick: "event.stopPropagation();" do %>
+<%= button_to post_likes_path(post), method: :post, class: "p-1", data: { turbo_method: :post }, onclick: "event.stopPropagation();" do %>
   <%= image_tag 'like.svg', alt: "いいね", class: "h-5 w-5" %>
 <% end %>
