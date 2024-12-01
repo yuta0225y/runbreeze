@@ -1,9 +1,13 @@
 <turbo-frame id="bookmark_buttons_<%= post.id %>">
-  <% if post.bookmarked_by?(current_user) %>
-    <!-- ブックマーク解除ボタン -->
-    <%= render 'bookmarks/unbookmark', post: post, bookmark: current_user.bookmarks.find_by(post: post) %>
-  <% else %>
-    <!-- ブックマーク追加ボタン -->
-    <%= render 'bookmarks/bookmark', post: post %>
-  <% end %>
+  <% if current_user %>
+    <div class="flex items-center space-x-2">
+      <% if post.bookmarked_by?(current_user) %>
+        <!-- ブックマーク解除ボタン -->
+        <%= render 'bookmarks/unbookmark', post: post, bookmark: current_user.bookmarks.find_by(post: post) %>
+      <% else %>
+        <!-- ブックマーク追加ボタン -->
+        <%= render 'bookmarks/bookmark', post: post %>
+      <% end %>
+    </div>
+  <% end %> <!-- ログインしていない場合は何も表示しない -->
 </turbo-frame>
