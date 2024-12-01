@@ -1,7 +1,7 @@
 <turbo-frame id="like_buttons_<%= post.id %>">
   <% if current_user %>
     <div class="flex items-center space-x-2">
-      <% if post.liked_by?(current_user) %>
+      <% if current_user && post.liked_by?(current_user) %>
         <!-- いいね解除ボタン -->
         <%= render 'likes/unlike', post: post, like: current_user.likes.find_by(post: post) %>
       <% else %>

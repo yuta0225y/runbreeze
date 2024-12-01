@@ -32,11 +32,13 @@ class Post < ApplicationRecord
 
   # ブックマークしているかどうかを判定
   def bookmarked_by?(user)
+    return false if user.nil?
     bookmarks.exists?(user_id: user.id)
   end
 
   # いいねしているかどうかを判定
   def liked_by?(user)
+    return false if user.nil?
     likes.exists?(user_id: user.id)
   end
 end
