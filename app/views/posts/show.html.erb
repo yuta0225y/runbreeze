@@ -35,7 +35,7 @@
     <% end %>
   </div>
   
-  <!-- アクションボタン（Like, Comment, Bookmark） -->
+  <!-- アクションボタン（Like,Bookmark） -->
   <div class="flex items-center justify-between mb-4">
     <div class="flex space-x-4">
 
@@ -43,12 +43,6 @@
       <div class="flex items-center space-x-1">
         <%= render 'likes/like_buttons', post: @post %>
       </div>
-
-      <!-- コメントボタン -->
-      <button class="flex items-center space-x-1">
-        <%= image_tag 'comment.svg', alt: "Comment", class: "h-5 w-5" %>
-        <span class="text-sm"><%= @comments.size %></span>
-      </button>
     </div>
   
     <!-- ブックマークボタン -->
@@ -104,27 +98,26 @@
     <% end %>
   </div>
   
+  <% if current_user %>
   <!-- コメントフォーム -->
   <div class="flex items-center bg-gray-100 rounded-full p-1 shadow-sm">
     <%= form_with model: [@post, Comment.new], local: true, class: "flex-grow" do |f| %>
       <div class="flex items-center w-full">
         <%= f.text_field :content, placeholder: "コメントを追加...", class: "w-full bg-transparent text-sm border-none focus:outline-none px-3 py-1" %>
-        
         <button type="submit" class="ml-1 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1 flex items-center justify-center">
+          <!-- 送信アイコン -->
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
             <path fill-rule="evenodd" d="M12 4a1 1 0 01.707.293l7 7a1 1 0 01-1.414 1.414L13 7.414V20a1 1 0 11-2 0V7.414L5.707 12.707a1 1 0 01-1.414-1.414l7-7A1 1 0 0112 4z" clip-rule="evenodd" />
           </svg>
         </button>
       </div>
-      <% if @comment && @comment.errors.any? %>
-        <div class="text-red-500 text-sm mt-2">
-          <ul>
-            <% @comment.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <!-- ログインを促すリンク -->
+  <p class="text-sm text-center mt-4">
+    <%= link_to 'コメントするにはログインが必要です', new_user_session_path, class: "text-blue-500 hover:underline" %>
+  </p>
     <% end %>
   </div>  
 </div>
