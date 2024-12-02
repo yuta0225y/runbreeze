@@ -40,4 +40,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   get "privacy_policy" => "static_pages#privacy_policy", as: :privacy_policy
+  get "terms_of_service" => "static_pages#terms_of_service", as: :terms_of_service
 end
