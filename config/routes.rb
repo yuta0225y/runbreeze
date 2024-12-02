@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   # PWA サポート用の動的ルート
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+
+  get "privacy_policy" => "static_pages#privacy_policy", as: :privacy_policy
 end
