@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 py-2 bg-base-100 pb-20" style="padding-top: 70px;">
+<div class="container mx-auto px-4 py-2 bg-base-100 pb-20" style="padding-top: 30px;">
   <!-- 検索バー -->
   <div class="flex justify-center mb-4">
     <%= search_form_for @q, url: posts_path, method: :get, class: "w-full max-w-md flex items-center" do |f| %>
@@ -29,7 +29,6 @@
     <% end %>
   </div>
   
-  <!-- 投稿一覧 -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
     <% if @posts.present? %>
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
@@ -39,7 +38,6 @@
   </div>
 </div>
 
-<!-- ページネーション -->
 <div style="padding-bottom: 80px; text-align: center;">
   <%= paginate @posts %>
 </div>
