@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100">
+<div class="navbar bg-base-100relative" style="z-index: 1000;">
   <div class="flex-1">
     <%= link_to 'RunBreeze', root_path, class: "btn btn-ghost text-xl" %>
   </div>
@@ -10,7 +10,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </label>
-      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 absolute top-full right-0 mt-2" style="z-index: 1002;">
         <li><%= link_to '新規登録', new_user_registration_path, class: "btn btn-ghost" %></li>
         <hr>
         <li><%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left" %></li>
