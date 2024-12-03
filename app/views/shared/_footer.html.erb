@@ -13,7 +13,7 @@
   <% end %>
 
   <!-- マイページ -->
-  <%= link_to edit_user_registration_path, class: "flex flex-col items-center flex-1 py-1 #{current_page?(edit_user_registration_path) ? 'text-primary' : 'text-gray-500'}" do %>
+  <%= link_to mypage_path, class: "flex flex-col items-center flex-1 py-1 #{current_page?(mypage_path) ? 'text-primary' : 'text-gray-500'}" do %>
     <%= image_tag 'mypage.svg', alt: "My Page", class: "h-6 w-6 mb-1" %> 
     <span class="text-xs">マイページ</span>
   <% end %>

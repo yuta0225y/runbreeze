@@ -14,6 +14,14 @@ Rails.application.routes.draw do
                sessions: "users/sessions"
              }
 
+    get "mypage" => "users#mypage", as: :mypage
+
+    get "edit_profile" => "users#edit_profile", as: :edit_profile
+    patch "update_profile" => "users#update_profile", as: :update_profile
+
+    get "edit_password" => "users#edit_password", as: :edit_password
+    patch "update_password" => "users#update_password", as: :update_password
+
   resources :posts do
     resources :comments, only: %i[create], shallow: true
     collection do

@@ -3,12 +3,12 @@
 <%= form_with(model: resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-control mb-4">
     <%= f.label :email, "メールアドレス", class: "label" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white",placeholder: "例: taro@example.com" %>
   </div>
 
   <div class="form-control mb-6">
     <%= f.label :password, "パスワード", class: "label" %>
-    <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white" %>
+    <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white", placeholder: "4文字以上のパスワードを入力してください" %>
   </div>
 
   <div class="form-control flex items-center justify-between mb-6">
