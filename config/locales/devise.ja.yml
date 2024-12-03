@@ -20,3 +20,4 @@ ja:
       not_saved:
         one: "1件のエラーがあります"
         other: "%{count}件のエラーがあります"
+        too_short: "は%{count}文字以上で入力してください"
