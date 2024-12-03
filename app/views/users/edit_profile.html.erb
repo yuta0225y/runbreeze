@@ -1,0 +1,64 @@
+<h1 class="text-3xl font-bold mb-6 text-center">プロフィール編集</h1>
+
+<div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
+  <%= form_with(model: @user, url: update_profile_path, method: :patch, local: true, html: { multipart: true }) do |f| %>
+    
+    <div class="form-control mb-6">
+      <%= f.label :profile_image, "プロフィール画像", class: "label" %>
+      <%= f.file_field :profile_image, class: "file-input file-input-bordered w-full" %>
+      <% if @user.profile_image.present? %>
+        <div class="mt-4">
+          <%= image_tag @user.profile_image.url, 
+                        alt: "プロフィール画像", 
+                        style: "border-radius: 50%; width: 8rem; height: 8rem; object-fit: cover; margin-bottom: 1rem;" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :username, "ユーザー名", class: "label" %>
+      <%= f.text_field :username, class: "input input-bordered w-full", placeholder: "例: taro_yamada" %>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :email, "メールアドレス", class: "label" %>
+      <%= f.email_field :email, class: "input input-bordered w-full", placeholder: "例: taro@example.com" %>
+    </div>
+
+    <!-- ランニングの目的 (単一選択) -->
+    <div class="form-control mb-4">
+      <%= f.label :running_goal, "ランニングの目的", class: "label" %>
+      <%= f.select :running_goal, 
+          options_for_select(['ダイエット', 'マラソン完走', '健康維持', 'ストレス解消'], @user.running_goal), 
+          { include_blank: '選択してください' }, 
+          class: "select select-bordered w-full" %>
+      <small class="text-gray-500">一つ選択してください</small>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :running_specs, "目標", class: "label" %>
+      <%= f.text_field :running_specs, class: "input input-bordered w-full", placeholder: "例: フルマラソンを完走したい" %>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :reference_url1, "SNSリンク等", class: "label" %>
+      <%= f.url_field :reference_url1, class: "input input-bordered w-full", placeholder: "例: https://twitter.com/username" %>
+      <small class="text-gray-500">SNSやブログのURLを共有できます</small>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :bio, "自己紹介", class: "label" %>
+      <%= f.text_area :bio, class: "textarea textarea-bordered w-full", placeholder: "例: こんにちは、ランニングが大好きな山田太郎です。", maxlength: 200 %>
+      <small class="text-gray-500">200文字以内で入力してください</small>
+    </div>
+
+    <div class="form-control">
+      <%= f.submit "プロフィールを更新", class: "btn btn-primary w-full" %>
+    </div>
+  <% end %>
+
+  <div class="mt-4 text-center">
+    <%= link_to "マイページに戻る", mypage_path, class: "link link-primary" %>
+  </div>
+</div>
+
