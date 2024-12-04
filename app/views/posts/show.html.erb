@@ -1,15 +1,17 @@
 <div class="container mx-auto px-4 py-8">
   <!-- ユーザー情報 -->
   <div class="flex items-center mb-4">
-    <% if @post.user.profile_image.present? %>
-      <%= image_tag @post.user.profile_image.url, alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
-    <% else %>
-      <%= image_tag "default_profile_image.svg", alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
+    <%= link_to user_profile_path(@post.user), class: "flex items-center" do %>
+      <% if @post.user.profile_image.present? %>
+        <%= image_tag @post.user.profile_image.url, alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
+      <% else %>
+        <%= image_tag "default_profile_image.svg", alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
+      <% end %>
+      <div>
+        <p class="text-sm font-semibold"><%= @post.user.username %></p>
+        <p class="text-xs text-gray-500"><%= @post.created_at.strftime("%Y年%m月%d日") %></p>
+      </div>
     <% end %>
-    <div>
-      <p class="text-sm font-semibold"><%= @post.user.username %></p>
-      <p class="text-xs text-gray-500"><%= @post.created_at.strftime("%Y年%m月%d日") %></p>
-    </div>
   </div>
 
   <!-- 編集・削除リンク -->
@@ -82,15 +84,15 @@
     <% if @comments.any? %>
       <% @comments.each do |comment| %>
         <div class="flex items-center mb-2">
-          <% if comment.user.profile_image.present? %>
-            <%= image_tag comment.user.profile_image.url, alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
-          <% else %>
-            <%= image_tag "default_profile_image.svg", alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
-          <% end %>
-          <div>
+          <%= link_to user_profile_path(comment.user), class: "flex items-center" do %>
+            <% if comment.user.profile_image.present? %>
+              <%= image_tag comment.user.profile_image.url, alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
+            <% else %>
+              <%= image_tag "default_profile_image.svg", alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
+            <% end %>
             <span class="font-semibold"><%= comment.user.username %>:</span>
-            <span><%= comment.content %></span>
-          </div>
+          <% end %>
+          <span><%= comment.content %></span>
         </div>
       <% end %>
     <% else %>
