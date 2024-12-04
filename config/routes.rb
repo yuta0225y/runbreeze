@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     get "edit_password" => "users#edit_password", as: :edit_password
     patch "update_password" => "users#update_password", as: :update_password
 
+    get "users/:id" => "users#show", as: :user_profile
+
   resources :posts do
     resources :comments, only: %i[create], shallow: true
     collection do

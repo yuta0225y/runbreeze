@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [ :show ]
 
   def mypage
     @user = current_user
@@ -32,6 +32,14 @@ class UsersController < ApplicationController
       flash.now[:alert] = "パスワードの更新に失敗しました。"
       render :edit_password, status: :unprocessable_entity
     end
+  end
+
+  # 他のユーザーのプロフィールを表示
+  def show
+    @user = User.find(params[:id])
+    @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(6)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to posts_path, alert: "ユーザーが見つかりません"
   end
 
   private
