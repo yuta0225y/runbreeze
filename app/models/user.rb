@@ -13,9 +13,9 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:encrypted_password] }
 
-  validates :password_confirmation, presence: true, if: -> { password.present? } 
-  
-  validates :running_goal, inclusion: { in: ["ダイエット", "マラソン完走", "健康維持", "ストレス解消"]}, allow_blank: true
+  validates :password_confirmation, presence: true, if: -> { password.present? }
+
+  validates :running_goal, inclusion: { in: [ "ダイエット", "マラソン完走", "健康維持", "ストレス解消" ] }, allow_blank: true
 
   validates :running_specs, length: { maximum: 255 }, allow_blank: true
 
@@ -72,14 +72,14 @@ class User < ApplicationRecord
 
     if user
       # 既存のユーザーが見つかった場合、そのユーザーを返す
-      return user
+      user
     else
       # email でユーザーを検索
       user = find_by(email: auth.info.email)
       if user
         # 既存のユーザーに provider と uid を関連付けて保存
         user.update(provider: auth.provider, uid: auth.uid)
-        return user
+        user
       else
         # ユーザー名のユニーク性を確保
         base_username = auth.info.name.parameterize
