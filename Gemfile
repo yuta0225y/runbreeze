@@ -17,9 +17,9 @@ gem "ransack"
 gem "kaminari"
 
 # google認証用
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 gem "rails-i18n"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
