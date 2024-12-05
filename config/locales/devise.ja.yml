@@ -12,12 +12,15 @@ ja:
     failure:
       already_authenticated: "すでにログインしています"
       unauthenticated: "ログインしてください"
-      invalid: "ログインに失敗しました"
-      not_saved: "アカウントの作成に失敗しました"
+      invalid: "ログインできませんでした"
+      not_saved: "アカウントが作成できませんでした"
       not_found_in_database: "無効な%{authentication_keys}またはパスワードです。" 
-  errors:
-    messages:
-      not_saved:
-        one: "1件のエラーがあります"
-        other: "%{count}件のエラーがあります"
-        too_short: "は%{count}文字以上で入力してください"
+    errors:
+      messages:
+        not_saved:
+          one: "1件のエラーがあります"
+          other: "%{count}件のエラーがあります"
+          too_short: "は%{count}文字以上で入力してください"
+    omniauth_callbacks:
+      success: "%{kind}アカウントからログインしました"
+      failure: "%{kind}アカウントからログインできませんでした"

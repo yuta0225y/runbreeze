@@ -2,16 +2,16 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   devise_for :users,
-             path: "",
+             path: "users",
              path_names: {
-               sign_up: "",
+               sign_up: "signup",
                sign_in: "login",
-               sign_out: "logout",
-               registration: "signup"
+               sign_out: "logout"
              },
              controllers: {
                registrations: "users/registrations",
-               sessions: "users/sessions"
+               sessions: "users/sessions",
+               omniauth_callbacks: "users/omniauth_callbacks"
              }
 
     get "mypage" => "users#mypage", as: :mypage
