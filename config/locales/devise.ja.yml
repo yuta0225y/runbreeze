@@ -1,4 +1,22 @@
+# config/locales/devise.ja.yml
+
 ja:
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      not_saved: "ユーザーの保存に失敗しました。以下のエラーをご確認ください。"
+      record_invalid: "無効なレコードです。"
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "このメールアドレスは既に使用されています。"
+            username:
+              taken: "このユーザー名は既に使用されています。"
+
   devise:
     sessions:
       signed_in: "ログインしました"
@@ -14,13 +32,16 @@ ja:
       unauthenticated: "ログインしてください"
       invalid: "ログインできませんでした"
       not_saved: "アカウントが作成できませんでした"
-      not_found_in_database: "無効な%{authentication_keys}またはパスワードです。" 
+      not_found_in_database: "無効な%{authentication_keys}またはパスワードです。"
     errors:
       messages:
         not_saved:
           one: "1件のエラーがあります"
           other: "%{count}件のエラーがあります"
-          too_short: "は%{count}文字以上で入力してください"
+          too_short: "は%{count}文字以上で入力してください。"
     omniauth_callbacks:
-      success: "%{kind}アカウントからログインしました"
-      failure: "%{kind}アカウントからログインできませんでした"
+      failure: "%{kind}からの認証に失敗しました。"
+      success: "%{kind}アカウントでログインしました"
+
+  # 他の翻訳も必要に応じて追加
+

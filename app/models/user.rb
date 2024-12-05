@@ -1,19 +1,32 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2]
+  :recoverable, :rememberable, :validatable,
+  :omniauthable, omniauth_providers: %i[google_oauth2]
 
-  validates :username, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 3, maximum: 25 }
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :running_goal, inclusion: { in: [ "ダイエット", "マラソン完走", "健康維持", "ストレス解消" ], message: "%{value} は無効です" }, allow_blank: true
+  validates :username, presence: true,
+                       uniqueness: { case_sensitive: false },
+                       length: { minimum: 3, maximum: 25 }
+
+  validates :email, presence: true,
+                    uniqueness: true,
+                    format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:encrypted_password] }
+
+  validates :password_confirmation, presence: true, if: -> { password.present? }
+
+  validates :running_goal, inclusion: { in: [ "ダイエット", "マラソン完走", "健康維持", "ストレス解消" ] }, allow_blank: true
+
   validates :running_specs, length: { maximum: 255 }, allow_blank: true
-  validates :reference_url1, format: { with: URI::DEFAULT_PARSER.make_regexp, message: "有効なURLを入力してください" }, allow_blank: true
+
+  validates :reference_url1, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
+
   validates :bio, length: { maximum: 200 }, allow_blank: true
+
+  # プロフィール画像アップロード
   mount_uploader :profile_image, ProfileImageUploader
 
-  # Userが削除されたときに関連するPostも削除される
+  # 関連付け
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
@@ -26,6 +39,7 @@ class User < ApplicationRecord
     %w[username]
   end
 
+  # ブックマーク機能
   def bookmark(post)
     bookmark_posts << post
   end
@@ -38,6 +52,7 @@ class User < ApplicationRecord
     bookmark_posts.include?(post)
   end
 
+  # いいね機能
   def like(post)
     like_posts << post
   end
@@ -50,11 +65,40 @@ class User < ApplicationRecord
     like_posts.include?(post)
   end
 
+  # OmniAuthからのユーザー取得または作成
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.username = auth.info.name
+    # まず provider と uid でユーザーを検索
+    user = find_by(provider: auth.provider, uid: auth.uid)
+
+    if user
+      # 既存のユーザーが見つかった場合、そのユーザーを返す
+      user
+    else
+      # email でユーザーを検索
+      user = find_by(email: auth.info.email)
+      if user
+        # 既存のユーザーに provider と uid を関連付けて保存
+        user.update(provider: auth.provider, uid: auth.uid)
+        user
+      else
+        # ユーザー名のユニーク性を確保
+        base_username = auth.info.name.parameterize
+        unique_username = base_username
+        counter = 1
+        while User.exists?(username: unique_username)
+          unique_username = "#{base_username}#{counter}"
+          counter += 1
+        end
+
+        # 新規ユーザーを作成
+        create(
+          email: auth.info.email,
+          username: unique_username,
+          password: Devise.friendly_token[0, 20],
+          provider: auth.provider,
+          uid: auth.uid,
+        )
+      end
     end
   end
 end

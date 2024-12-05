@@ -1,10 +1,20 @@
 ja:
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: "を入力してください。"
+      taken: "は既に使用されています。"
+      invalid: "は有効な値ではありません。"
+      too_short: "は%{count}文字以上で入力してください。"
+      # 他のデフォルトメッセージも必要に応じて追加
+
   activerecord:
     models:
       user: ユーザー
     attributes:
       user:
         email: メールアドレス
-        name: ユーザー名
+        username: ユーザー名
         password: パスワード
         password_confirmation: パスワード確認
+        # 他の属性も必要に応じて追加

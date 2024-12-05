@@ -1,9 +1,4 @@
-# frozen_string_literal: true
-
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # You should configure your model like this:
-  # devise :omniauthable, omniauth_providers: [:twitter]
-  # app/controllers/users/omniauth_callbacks_controller.rb
   def google_oauth2
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
