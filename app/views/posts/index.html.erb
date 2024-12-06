@@ -15,14 +15,14 @@
   <div class="carousel space-x-1 px-4 overflow-x-auto no-scrollbar flex items-center justify-start">
     <!-- すべてボタン -->
     <div class="carousel-item">
-      <%= link_to posts_path, class: "btn rounded-full px-4 #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
+      <%= link_to posts_path, class: "btn rounded-full px-4 text-sm #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
         すべて
       <% end %>
     </div>
-  
-    <% @categories.each do |category| %>
+    <!-- 各カテゴリーのボタン -->
+    <% Category.all.each do |category| %>
       <div class="carousel-item">
-        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 #{params.dig(:q, :category_id_eq).to_s == category.id.to_s ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
+        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 text-sm #{params.dig(:q, :category_id_eq) == category.id.to_s ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
           <%= category.name %>
         <% end %>
       </div>

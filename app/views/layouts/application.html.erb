@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title>RunBreeze</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <meta name="theme-color" content="#00a8e8">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module", defer: true %>
 
@@ -23,13 +23,26 @@
   </head>
 
   <body>
-  <% if user_signed_in? %>
-    <%= render 'shared/after_header_login' %>
-  <% else %>
-    <%= render 'shared/before_header_login' %>
-  <% end %>
-  <%= render 'shared/flash_messages' %>
-  <%= yield %>
-  <%= render "shared/footer" %>
+    <% if user_signed_in? %>
+      <%= render 'shared/after_header_login' %>
+    <% else %>
+      <%= render 'shared/before_header_login' %>
+    <% end %>
+    <%= render 'shared/flash_messages' %>
+    <%= yield %>
+    <%= render "shared/footer" %>
   </body>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service_worker.js')
+        .then((registration) => {
+          console.log('Service Worker registered:', registration);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
 </html>
