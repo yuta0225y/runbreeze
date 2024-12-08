@@ -1,52 +1,53 @@
 <%= link_to post_path(post), class: "block" do %>
   <div class="card bg-base-100 shadow-xl flex flex-row p-4">
-    <!-- 画像とカテゴリー -->
-    <div class="w-1/4 relative mr-4">
-      <% if post.post_image.present? %>
-        <%= image_tag(post.post_image.url, alt: post.title, class: "w-full h-full object-cover aspect-square") %>
-      <% else %>
-        <%= image_tag("default_post_image.jpg", alt: post.title, class: "w-full h-full object-cover aspect-square") %>
-      <% end %>
-
-      <% if post.category.present? %>
-        <div class="absolute top-0 left-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg">
-          <%= post.category.name %>
-        </div>
-      <% end %>
-    </div>
+  <!-- 画像とカテゴリー -->
+  <div class="w-1/4 relative mr-4">
+    <% if post.post_image.present? %>
+      <%= image_tag(post.post_image.url, alt: post.title, class: "w-full h-full object-cover aspect-square") %>
+    <% else %>
+      <%= image_tag("default_post_image.jpg", alt: post.title, class: "w-full h-full object-cover aspect-square") %>
+    <% end %>
+  </div>
 
     <!-- コンテンツ部分 -->
     <div class="w-3/4">
 
       <!-- タイトル -->
-      <h2 class="text-l font-bold"><%= post.title %></h2>
+      <h2 class="text-base font-bold"><%= post.title %></h2>
 
       <!-- 内容（概要表示） -->
       <p class="text-sm text-gray-600 line-clamp-2 mt-1"><%= truncate(post.content, length: 100) %></p>
 
       <!-- タグ -->
-      <div class="flex flex-wrap space-x-2 mt-3">
-        <% post.tags.each do |tag| %>
-          <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full shadow-sm">
-            #<%= tag.name %>
+      <div class="flex flex-wrap space-x-1 mt-4">
+        <% post.tags.each_with_index do |tag, index| %>
+          <% if index < 2 %>
+            <span class="bg-base-200 text-xs px-3 py-1 rounded-full shadow-sm">
+              #<%= tag.name %>
+            </span>
+          <% elsif index == 2 %>
+          <span class="text-base-100 text-xs px-3 py-1 rounded-full shadow-sm" style="background-color: orange;">
+            +<%= post.tags.size - 2 %>件
           </span>
+            <% break %>
+          <% end %>
         <% end %>
       </div>
 
       <!-- ユーザー情報とアクションボタン -->
-      <div class="flex items-center justify-between mt-2">
+      <div class="flex items-center justify-between mt-3">
         <!-- ユーザーアイコンと名前 -->
-        <div class="flex items-center">
+        <div class="flex items-center gap-2">
           <% if post.user.profile_image.present? %>
-            <%= image_tag(post.user.profile_image.url, alt: post.user.username, class: "w-8 h-8 rounded-full") %>
+            <%= image_tag(post.user.profile_image.url, alt: post.user.username, class: "w-10 h-10 rounded-full") %>
           <% else %>
-            <%= image_tag("default_profile_image.svg", alt: post.user.username, class: "w-8 h-8 rounded-full") %>
+            <%= image_tag("default_profile_image.svg", alt: post.user.username, class: "w-10 h-10 rounded-full") %>
           <% end %>
-          <span class="text-sm text-gray-700"><%= post.user.username %></span>
+          <span class="text-xs text-gray-700"><%= post.user.username %></span>
         </div>
-
+      
         <!-- アクションボタン（いいね・ブックマーク） -->
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-1">
           <!-- いいねボタン -->
           <%= render 'likes/like_buttons', post: post %>
           <!-- ブックマークボタン -->

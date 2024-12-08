@@ -1,6 +1,6 @@
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-1">
   <!-- ユーザー情報 -->
-  <div class="flex items-center mb-4">
+  <div class="flex items-center justify-between mb-2">
     <%= link_to user_profile_path(@post.user), class: "flex items-center" do %>
       <% if @post.user.profile_image.present? %>
         <%= image_tag @post.user.profile_image.url, alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
@@ -8,19 +8,19 @@
         <%= image_tag "default_profile_image.svg", alt: @post.user.username, class: "w-10 h-10 rounded-full mr-2" %>
       <% end %>
       <div>
-        <p class="text-sm font-semibold"><%= @post.user.username %></p>
+        <p class="text-sm font-semibold "><%= @post.user.username %></p>
         <p class="text-xs text-gray-500"><%= @post.created_at.strftime("%Y年%m月%d日") %></p>
       </div>
     <% end %>
-  </div>
 
-  <!-- 編集・削除リンク -->
-  <% if @post.user == current_user %>
-    <div class="flex space-x-2 mb-4">
-      <%= link_to '編集', edit_post_path(@post), class: "text-blue-500 hover:underline" %>
-      <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: "text-red-500 hover:underline" %>
+    <!-- 編集・削除リンク -->
+    <% if @post.user == current_user %>
+      <div class="flex space-x-2">
+        <%= link_to '編集', edit_post_path(@post), class: "btn btn-primary text-base-100", style: "padding: 0.1rem 0.8rem; font-size: 0.75rem;" %>
+        <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: "btn btn-secondary text-base-100", style: "padding: 0.1rem 0.8rem; font-size: 0.75rem;" %>
+      </div>
+    <% end %>
     </div>
-  <% end %>
 
   <!-- 投稿画像とカテゴリ -->
   <div class="relative mb-4 flex justify-center">
@@ -31,15 +31,15 @@
     <% end %>
 
     <% if @post.category.present? %>
-      <div class="absolute top-2 left-2 bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded-full shadow-lg">
+      <div class="absolute top-2 left-2 bg-primary text-base-100 text-xs px-2 py-1 rounded-full shadow-sm" style="background-color: orange;">
         <%= @post.category.name %>
       </div>
     <% end %>
   </div>
   
   <!-- アクションボタン（Like,Bookmark） -->
-  <div class="flex items-center justify-between mb-4">
-    <div class="flex space-x-4">
+  <div class="flex items-center justify-between mb-2">
+    <div class="flex space-x-2">
 
       <!-- いいねボタン -->
       <div class="flex items-center space-x-1">
@@ -54,17 +54,10 @@
   </div>  
   
   <!-- 投稿タイトル -->
-  <h2 class="text-2xl font-bold mb-2"><%= @post.title %></h2>
-  
-  <!-- タグ -->
-  <div class="flex flex-wrap gap-2 mb-4">
-    <% @post.tags.each do |tag| %>
-      <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full shadow-sm">#<%= tag.name %></span>
-    <% end %>
-  </div>
+  <h2 class="text-lg font-bold mb-1"><%= @post.title %></h2>
   
   <!-- 投稿内容 -->
-  <p class="text-sm text-gray-700 mb-6"><%= simple_format(@post.content) %></p>
+  <h3 class="text-sm text-gray-700 mb-1"><%= simple_format(@post.content) %></h3>
 
   <!-- 参考URL -->
   <% if @post.reference_url.present? %>
@@ -76,10 +69,16 @@
     </div>
   <% end %>
 
+  <!-- タグ -->
+  <div class="flex flex-wrap gap-2 mt-4 mb-4">
+    <% @post.tags.each do |tag| %>
+      <span class="bg-base-100 text-xs px-2 py-1 rounded-full shadow-sm">#<%= tag.name %></span>
+    <% end %>
+  </div>
+
   <hr class="border-t border-gray-300 mb-6">
 
   <!-- コメントセクション -->
-  <h3 class="text-md font-semibold mb-2">コメント</h3>
   <div class="space-y-2 mb-4 text-sm text-gray-700">
     <% if @comments.any? %>
       <% @comments.each do |comment| %>
@@ -95,8 +94,6 @@
           <span><%= comment.content %></span>
         </div>
       <% end %>
-    <% else %>
-      <p>まだコメントがありません。最初のコメントを残しましょう！</p>
     <% end %>
   </div>
   
@@ -105,8 +102,8 @@
   <div class="flex items-center bg-gray-100 rounded-full p-1 shadow-sm">
     <%= form_with model: [@post, Comment.new], local: true, class: "flex-grow" do |f| %>
       <div class="flex items-center w-full">
-        <%= f.text_field :content, placeholder: "コメントを追加...", class: "w-full bg-transparent text-sm border-none focus:outline-none px-3 py-1" %>
-        <button type="submit" class="ml-1 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1 flex items-center justify-center">
+        <%= f.text_field :content, placeholder: "コメント", class: "w-full bg-transparent text-sm border-none focus:outline-none px-3 py-1" %>
+        <button type="submit" class="ml-1 text-white rounded-full p-1 flex items-center justify-center bg-primary hover:bg-primary-dark">
           <!-- 送信アイコン -->
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
             <path fill-rule="evenodd" d="M12 4a1 1 0 01.707.293l7 7a1 1 0 01-1.414 1.414L13 7.414V20a1 1 0 11-2 0V7.414L5.707 12.707a1 1 0 01-1.414-1.414l7-7A1 1 0 0112 4z" clip-rule="evenodd" />
