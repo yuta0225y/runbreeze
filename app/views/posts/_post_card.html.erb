@@ -41,7 +41,7 @@
           <% if post.user.profile_image.present? %>
             <%= image_tag(post.user.profile_image.url, alt: post.user.username, class: "w-10 h-10 rounded-full") %>
           <% else %>
-            <%= image_tag("default_profile_image.svg", alt: post.user.username, class: "w-10 h-10 rounded-full") %>
+            <%= image_tag("default_profile_image.png", alt: post.user.username, class: "w-10 h-10 rounded-full") %>
           <% end %>
           <span class="text-xs text-gray-700"><%= post.user.username %></span>
         </div>
