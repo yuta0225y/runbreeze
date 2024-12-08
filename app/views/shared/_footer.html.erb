@@ -1,20 +1,20 @@
 <div class="navbar bg-base-100 z-40 flex justify-between w-full" style="position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;">
 
   <!-- ホーム -->
-  <%= link_to posts_path, class: "flex flex-col items-center flex-1 py-1 #{current_page?(posts_path) ? 'text-primary' : 'text-gray-500'}" do %>
-    <%= image_tag 'home.svg', alt: "Home", class: "h-6 w-6 mb-1" %> 
+  <%= link_to posts_path, class: "flex flex-col items-center flex-1 py-1 text-gray-500" do %>
+    <%= image_tag 'home.svg', alt: "Home", class: "h-4 w-4 mb-1" %> 
     <span class="text-xs">ホーム</span>
   <% end %>
 
   <!-- ポスト -->
-  <%= link_to new_post_path, class: "flex flex-col items-center flex-1 py-1 #{current_page?(new_post_path) ? 'text-primary' : 'text-gray-500'}" do %>
-    <%= image_tag 'post.svg', alt: "Create", class: "h-8 w-8 mb-1" %> 
-    <span class="text-xs">ポスト</span> 
+  <%= link_to new_post_path, class: "flex flex-col items-center flex-1 py-1 text-gray-500" do %>
+    <%= image_tag 'post.svg', alt: "Create", class: "h-4 w-4 mb-1" %> 
+    <span class="text-xs">投稿する</span> 
   <% end %>
 
   <!-- マイページ -->
-  <%= link_to mypage_path, class: "flex flex-col items-center flex-1 py-1 #{current_page?(mypage_path) ? 'text-primary' : 'text-gray-500'}" do %>
-    <%= image_tag 'mypage.svg', alt: "My Page", class: "h-6 w-6 mb-1" %> 
+  <%= link_to mypage_path, class: "flex flex-col items-center flex-1 py-1 text-gray-500" do %>
+    <%= image_tag 'mypage.svg', alt: "My Page", class: "h-4 w-4 mb-1" %> 
     <span class="text-xs">マイページ</span>
   <% end %>
 </div>
