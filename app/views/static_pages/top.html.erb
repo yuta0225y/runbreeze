@@ -1,12 +1,12 @@
-<div class="hero bg-base-200">
+<div class="hero">
   <div class="hero-content text-center">
-    <div class="max-w-md mx-auto">
-      <h1 class="lg:text-5xl text-3xl font-bold">RunBreeze</h1>
-      <p class="py-6 text-base lg:text-lg">
-        ランニングで学んだことを共有しよう
-      </p>
-      <%= link_to "投稿をみる", posts_path, class: "btn btn-primary" %>
-      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline" %>
+    <div class="mx-auto w-full">
+      <%= image_tag "top.png", alt: "RunBreeze Logo", style: "width: 100%; height: auto;" %>
+
+      <% if !current_user %>
+        <%= link_to "投稿をみる", posts_path, class: "btn btn-primary text-base-100" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100", style: "background-color: orange;" %>
+      <% end %>
     </div>
   </div>
 </div>

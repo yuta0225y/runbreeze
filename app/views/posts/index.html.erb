@@ -1,43 +1,44 @@
-<div class="container mx-auto px-4 py-2 bg-base-100 pb-20" style="padding-top: 30px;">
+<div class="container mx-auto px-4 py-2 bg-base-100">
   <!-- 検索バー -->
   <div class="flex justify-center mb-4">
     <%= search_form_for @q, url: posts_path, method: :get, class: "w-full max-w-md flex items-center" do |f| %>
-      <%= f.search_field :title_or_tags_name_or_user_username_or_category_name_cont, placeholder: "タイトル、カテゴリー、タグ等で検索", class: "input flex-grow bg-base-200 border-0 focus:ring-0 rounded-l-full text-gray-800 placeholder:text-gray-400" %>
-      <button type="submit" class="btn bg-primary text-base-100 rounded-r-full px-4">
+      <%= f.search_field :title_or_tags_name_or_user_username_or_category_name_cont, placeholder: "タイトル、カテゴリー、タグ等で検索", class: "input flex-grow bg-base-200 border-0 focus:ring-0 rounded-l-full text-gray-800 placeholder:text-gray-400 text-xs" %>
+      <button type="submit" class="btn bg-primary text-base-100 rounded-r-full">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16 11a5 5 0 11-10 0 5 5 0 0110 0z" />
         </svg>
       </button>
     <% end %>
   </div>
+</div>
 
   <!-- カテゴリーカルーセル -->
   <div class="carousel space-x-1 px-4 overflow-x-auto no-scrollbar flex items-center justify-start">
     <!-- すべてボタン -->
     <div class="carousel-item">
-      <%= link_to posts_path, class: "btn rounded-full px-4 text-sm #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
+      <%= link_to posts_path, class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-base-100 text-primary'}" do %>
         すべて
       <% end %>
     </div>
     <!-- 各カテゴリーのボタン -->
     <% Category.all.each do |category| %>
       <div class="carousel-item">
-        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 text-sm #{params.dig(:q, :category_id_eq) == category.id.to_s ? 'bg-primary text-base-100' : 'bg-secondary text-base-100'}" do %>
+        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq) == category.id.to_s ? 'bg-primary text-base-100' : 'bg-base-200 text-primary'}" do %>
           <%= category.name %>
         <% end %>
       </div>
     <% end %>
   </div>
   
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center mb-4">
     <% if @posts.present? %>
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     <% else %>
       <p class="text-center text-neutral">投稿がありません。</p>
     <% end %>
   </div>
-</div>
 
-<div style="padding-bottom: 80px; text-align: center;">
-  <%= paginate @posts %>
+  <div class="pb-20 text-center">
+    <%= paginate @posts %>
+  </div>
 </div>

@@ -1,28 +1,28 @@
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-1">
 
 <%= form_with model: @post, local: true, html: { class: "space-y-6", style: "padding-bottom: 100px", multipart: true } do |form| %>
-
-    <!-- カテゴリー選択 -->
-    <div class="form-control">
-      <label class="label text-sm">カテゴリーを選択してください</label>
-      <div class="carousel carousel-center space-x-2 overflow-x-auto" id="category-container">
-        <% Category.all.each do |category| %>
-          <div class="carousel-item">
-            <span
-              class="category-button badge badge-neutral cursor-pointer select-none"
-              data-category-id="<%= category.id %>">
-              <%= category.name %>
-            </span>
-          </div>
-        <% end %>
-      </div>
-      <!-- 選択されたカテゴリーの hidden field -->
-      <%= form.hidden_field :category_id, id: "selected-category-id", value: @post.category_id %>
+ 
+  <!-- カテゴリー選択 -->
+  <div class="form-control">
+    <label class="label text-xs">カテゴリーを選択してください</label>
+    <div class="carousel carousel-center space-x-2 overflow-x-auto" id="category-container">
+      <% Category.all.each do |category| %>
+        <div class="carousel-item">
+          <span
+            class="category-button badge badge-neutral cursor-pointer select-none"
+            data-category-id="<%= category.id %>">
+            <%= category.name %>
+          </span>
+        </div>
+      <% end %>
     </div>
+    <!-- 選択されたカテゴリーの hidden field -->
+    <%= form.hidden_field :category_id, id: "selected-category-id", value: @post.category_id %>
+  </div>
 
     <!-- タグ選択 -->
     <div class="form-control">
-      <label class="label text-sm">タグ（3つまで選択できます）</label>
+      <label class="label text-xs">タグ</label>
 
       <!-- 標準タグカルーセル -->
       <div class="carousel carousel-center space-x-2 overflow-x-auto" id="standard-tags-container">
@@ -58,35 +58,34 @@
 
     <!-- タイトル -->
     <div class="form-control">
-      <%= form.text_field :title, placeholder: "タイトルを入力してください", class: "input input-bordered w-full", value: @post.title %>
+      <%= form.text_field :title, placeholder: "タイトルを入力してください", class: "input input-bordered w-full text-xs", value: @post.title %>
     </div>
 
     <!-- 投稿内容 -->
     <div class="form-control">
-      <%= form.text_area :content, placeholder: "内容を入力してください", class: "textarea textarea-bordered w-full h-40", value: @post.content %>
+      <%= form.text_area :content, placeholder: "内容を入力してください", class: "textarea textarea-bordered w-full text-xs h-40", value: @post.content %>
     </div>
 
     <!-- 画像アップロード -->
     <div class="form-control">
-      <%= form.label :post_image, "関連画像（任意）", class: "label text-sm" %>
+      <%= form.label :post_image, "画像（任意）", class: "label text-xs" %>
       <% if @post.post_image.present? %>
         <div class="mb-2">
-          <%= image_tag @post.post_image.url, alt: @post.title, class: "max-w-md h-auto object-cover rounded-lg" %>
+          <%= image_tag @post.post_image.url, alt: @post.title, class: "max-w-md h-auto object-cover rounded-lg text-xs" %>
         </div>
       <% end %>
-      <%= form.file_field :post_image, class: "file-input file-input-bordered w-full" %>
+      <%= form.file_field :post_image, class: "file-input file-input-bordered w-full text-xs" %>
     </div>
 
     <!-- 参考URL -->
     <div class="form-control">
-      <%= form.label :reference_url, "URL (任意)", class: "label text-sm" %>
-      <%= form.url_field :reference_url, placeholder: "おすすめアイテムや記事などのURLを貼ることができます", class: "input input-bordered w-full", value: @post.reference_url %>
+      <%= form.url_field :reference_url, placeholder: "おすすめアイテムや記事などのURLを貼ることができます", class: "input input-bordered w-full text-xs", value: @post.reference_url %>
     </div>
 
     <!-- 送信ボタン -->
     <div class="flex justify-end space-x-2 mt-4">
-      <%= link_to "キャンセル", cancel_path, class: "px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-100" %>
-      <%= form.submit submit_button_text, class: "px-4 py-2 text-sm text-white bg-primary rounded-md hover:bg-blue-700" %>
+      <%= link_to "キャンセル", cancel_path, class: "btn btn-secondary btn-xs text-base-100 text-xs" %>
+      <%= form.submit submit_button_text, class: "btn btn-primary btn-xs text-base-100 text-xs" %>
     </div>
   <% end %>
 </div>
