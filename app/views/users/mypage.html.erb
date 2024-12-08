@@ -1,48 +1,61 @@
-<div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+<div class="space-y-6">
 
-  <div class="flex flex-col items-center" style= "padding-bottom: 30px;">
+  <!-- プロフィール情報セクション -->
+  <div class="bg-base-200 p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
     <%= image_tag @user.profile_image.url, 
-    alt: "プロフィール画像", 
-    style: "border-radius: 50%; width: 8rem; height: 8rem; object-fit: cover; margin-bottom: 1rem;" %>
-
-    <h2 class="text-2xl font-semibold mb-2"><%= @user.username %></h2>
-
-    <p class="text-gray-700 mb-1">
-      <strong>ランニングの目的:</strong>
-      <%= @user.running_goal.present? ? @user.running_goal : '未設定' %>
-    </p>
-
-    <p class="text-gray-700 mb-1">
-      <strong>ランニングの目標:</strong>
-      <%= @user.running_specs.present? ? @user.running_specs : '未設定' %>
-    </p>
-
-    <p class="text-gray-700 mb-4 text-center">
-      <strong>自己紹介:</strong><br>
-      <%= @user.bio.present? ? simple_format(@user.bio) : '未設定' %>
-    </p>
-
-    <% if @user.reference_url1.present? %>
-      <a href="<%= @user.reference_url1 %>" target="_blank" class="text-blue-500 hover:underline mb-4">
-        SNSやブログ等のリンクはこちら
-      </a>
-    <% end %>
-
-    <div class="flex space-x-4">
-      <%= link_to 'プロフィールを編集', edit_profile_path, class: "btn btn-primary" %>
-      <%= link_to 'パスワードを変更', edit_password_path, class: "btn btn-secondary" %>
+      alt: "プロフィール画像", 
+      style: "border-radius: 50%; width: 6rem; height: 6rem;" %>
+    <h2 class="text-2xl font-bold text-primary"><%= @user.username %></h2>
+    <p class="text-gray-600">ステータス: <strong>ランナー</strong></p>
+    <div class="flex justify-center gap-4">
+      <%= link_to 'プロフィールを編集', edit_profile_path, class: "btn btn-primary btn-sm text-base-100" %>
+      <%= link_to 'パスワードを変更', edit_password_path, class: "btn btn-secondary btn-sm text-base-100" %>
     </div>
   </div>
-</div>
 
-<div class="max-w-4xl mx-auto mt-2">
+  <!-- ランニング情報セクション -->
+  <div class="bg-base-200 p-6 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold mb-4 text-primary">ランニング情報</h3>
+    <p class="text-gray-600 mb-2">
+      <strong>目的:</strong> 
+      <%= @user.running_goal.present? ? @user.running_goal : '<span class="text-gray-400">未設定</span>'.html_safe %>
+    </p>
+    <p class="text-gray-600">
+      <strong>目標:</strong> 
+      <%= @user.running_specs.present? ? @user.running_specs : '<span class="text-gray-400">未設定</span>'.html_safe %>
+    </p>
+  </div>
+
+  <!-- 自己紹介セクション -->
+  <div class="bg-base-200 p-6 rounded-lg shadow-md">
+    <h3 class="text-xl font-semibold mb-4 text-primary">自己紹介</h3>
+    <p class="text-gray-600">
+      <%= @user.bio.present? ? @user.bio : '<span class="text-gray-400">未設定</span>'.html_safe %>
+    </p>
+    <% if @user.reference_url1.present? %>
+      <p class="mt-4">
+        <a href="<%= @user.reference_url1 %>" target="_blank" class="text-blue-500 hover:underline">
+          SNSやブログ等のリンクはこちら
+        </a>
+      </p>
+    <% end %>
+  </div>
+
+  <!-- 投稿セクション -->
   <% if @user.posts.any? %>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <% @user.posts.each do |post| %>
-        <%= render 'posts/post_card', post: post %>
-      <% end %>
+    <div class="bg-base-200 p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-semibold mb-4 text-primary">投稿一覧</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <% @user.posts.each do |post| %>
+          <%= render 'posts/post_card', post: post %>
+        <% end %>
+      </div>
     </div>
   <% else %>
-    <p class="text-gray-600">まだ投稿がありません。</p>
+    <div class="bg-base-200 p-6 rounded-lg shadow-md text-center">
+      <h3 class="text-xl font-semibold mb-4 text-primary">投稿一覧</h3>
+      <p class="text-gray-600">まだ投稿がありません。</p>
+    </div>
   <% end %>
+
 </div>
