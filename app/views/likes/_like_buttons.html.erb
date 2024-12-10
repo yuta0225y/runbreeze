@@ -1,6 +1,6 @@
 <turbo-frame id="like_buttons_<%= post.id %>">
   <% if current_user %>
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center space-x-1">
       <% if current_user && post.liked_by?(current_user) %>
         <!-- いいね解除ボタン -->
         <%= render 'likes/unlike', post: post, like: current_user.likes.find_by(post: post) %>
@@ -9,7 +9,7 @@
         <%= render 'likes/like', post: post %>
       <% end %>
       <!-- いいね数の表示 -->
-      <span class="ml-1 text-sm text-gray-600"><%= post.likes.count %></span>
+      <span class="text-sm text-gray-700"><%= post.likes.count %></span>
     </div>
-  <% end %> <!-- ログインしていない場合は何も表示しない -->
+  <% end %>
 </turbo-frame>
