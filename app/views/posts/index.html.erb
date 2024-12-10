@@ -1,6 +1,6 @@
-<div class="container mx-auto px-4 py-2 bg-base-100">
+<div class="container mx-auto max-w-3xl px-4 py-3 text-sm">
   <!-- 検索バー -->
-  <div class="flex justify-center mb-4">
+  <div class="flex justify-center mt-1 mb-3">
     <%= search_form_for @q, url: posts_path, method: :get, class: "w-full max-w-md flex items-center" do |f| %>
       <%= f.search_field :title_or_tags_name_or_user_username_or_category_name_cont, placeholder: "タイトル、カテゴリー、タグ等で検索", class: "input flex-grow bg-base-200 border-0 focus:ring-0 rounded-l-full text-gray-800 placeholder:text-gray-400 text-xs" %>
       <button type="submit" class="btn bg-primary text-base-100 rounded-r-full">
@@ -16,14 +16,14 @@
   <div class="carousel space-x-1 px-4 overflow-x-auto no-scrollbar flex items-center justify-start">
     <!-- すべてボタン -->
     <div class="carousel-item">
-      <%= link_to posts_path, class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-base-100 text-primary'}" do %>
+      <%= link_to posts_path, class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq).blank? ? 'bg-primary text-base-100' : 'bg-base-200 text-gray-700'}" do %>
         すべて
       <% end %>
     </div>
     <!-- 各カテゴリーのボタン -->
     <% Category.all.each do |category| %>
       <div class="carousel-item">
-        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq) == category.id.to_s ? 'bg-primary text-base-100' : 'bg-base-200 text-primary'}" do %>
+        <%= link_to posts_path(q: { category_id_eq: category.id }), class: "btn rounded-full px-4 text-xs #{params.dig(:q, :category_id_eq) == category.id.to_s ? 'bg-primary text-base-100' : 'bg-base-200 text-gray-700'}" do %>
           <%= category.name %>
         <% end %>
       </div>
@@ -34,7 +34,7 @@
     <% if @posts.present? %>
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     <% else %>
-      <p class="text-center text-neutral">投稿がありません。</p>
+      < class="text-center text-gray-600">投稿がありません。</>
     <% end %>
   </div>
 
