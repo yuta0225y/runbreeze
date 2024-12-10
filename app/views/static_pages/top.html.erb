@@ -1,11 +1,11 @@
 <div class="hero">
   <div class="hero-content text-center">
     <div class="mx-auto w-full">
-      <%= image_tag "top.png", alt: "RunBreeze Logo", style: "width: 100%; height: auto;" %>
+      <%= image_tag "top.png", alt: "RunBreeze Logo", class: "w-full mb-8" %>
 
       <% if !current_user %>
         <%= link_to "投稿をみる", posts_path, class: "btn btn-primary text-base-100" %>
-        <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100", style: "background-color: orange;" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100 btn-accent" %>
       <% end %>
     </div>
   </div>

@@ -1,15 +1,18 @@
 <div class="join text-xs mt-8 mx-auto flex justify-center">
   <%= paginator.render do -%>
-    <nav class="pagination" role="navigation" aria-label="pager" style="margin-bottom: 50px;">
+    <nav class="flex space-x-1" role="navigation" aria-label="pager">
+      <!-- 前のページ -->
       <%= prev_page_tag unless current_page.first? %>
+
+      <!-- 各ページ番号 -->
       <% each_page do |page| -%>
         <% if page.display_tag? -%>
           <%= page_tag page %>
         <% end -%>
       <% end -%>
-      <% unless current_page.out_of_range? %>
-        <%= next_page_tag unless current_page.last? %>
-      <% end %>
+
+      <!-- 次のページ -->
+      <%= next_page_tag unless current_page.last? %>
     </nav>
   <% end -%>
 </div>

@@ -1,16 +1,16 @@
-<div class="container mx-auto px-4 py-2 bg-base-100 pb-20">
-  <h1 class="text-xm font-bold mb-2">ブックマークした投稿</h1>
+<div class="container mx-auto px-4 py-6 bg-base-100 pt-16 pb-20">
+  <h1 class="text-2xl text-gray-700 font-bold mb-6">ブックマークした投稿</h1>
 
   <% if @posts.present? %>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     </div>
   <% else %>
-    <p class="text-center text-neutral">ブックマークした投稿はありません。</p>
+    <p class="text-center text-gray-500 mt-6">ブックマークした投稿はありません。</p>
   <% end %>
 
   <!-- ページネーション -->
-  <div class="mt-4 text-center">
+  <div class="mt-8 text-center text-sm text-gray-500">
     <%= paginate @bookmarks %>
   </div>
 </div>
