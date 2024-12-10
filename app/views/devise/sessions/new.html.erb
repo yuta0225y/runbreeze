@@ -1,53 +1,58 @@
-  <div class="space-y-8">
-    <!-- ログインタイトル -->
-    <div>
-      <h2 class="mt-4 text-center text-xl font-extrabold text-gray-900">ログイン</h2>
-    </div>
+<!-- app/views/static_pages/login.html.erb -->
+<div class="container mx-auto max-w-4xl px-4 py-8 text-gray-700 space-y-8">
+  <!-- ログインタイトル -->
+  <div>
+    <h1 class="mt-6 text-center text-xl font-bold text-gray-700">ログイン</h1>
+  </div>
 
-    <!-- エラーメッセージの表示 -->
-    <%= render "shared/error_messages", resource: resource %>
+  <!-- エラーメッセージの表示 -->
+  <%= render "shared/error_messages", resource: resource %>
 
-    <!-- ログインフォーム -->
+  <!-- ログインフォーム -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
     <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
-      <div class="rounded-md shadow-sm mb-4 -space-y-4">
+      <div class="space-y-4">
         <!-- メールアドレス入力 -->
-        <div class="form-control mb-4">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-xs", placeholder: "メールアドレス" %>
+        <div class="form-control">
+          <%= f.label :email, "メールアドレス", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "メールアドレス" %>
         </div>
 
         <!-- パスワード入力 -->
-        <div class="form-control mb-6 mt-4">
-          <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-xs", placeholder: "パスワード（4文字以上）" %>
+        <div class="form-control">
+          <%= f.label :password, "パスワード", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "パスワード（4文字以上）" %>
+        </div>
+
+        <!-- パスワード忘れリンク -->
+        <div class="flex justify-end">
+          <%= link_to "パスワードをお忘れの方はこちら", new_password_path(resource_name), class: "text-sm link link-primary" %>
+        </div>
+
+        <!-- ログインボタン -->
+        <div class="form-control">
+          <%= f.submit "ログイン", class: "btn btn-primary w-full text-base-100 mt-4 hover:bg-primary-focus transition-colors duration-200" %>
         </div>
       </div>
-
-      <!-- パスワード忘れリンク -->
-      <div class="form-control flex justify-end mb-6">
-        <%= link_to "パスワードをお忘れの方はこちら", new_password_path(resource_name), class: "text-sm link link-primary" %>
-      </div>
-
-      <!-- ログインボタン -->
-      <div class="form-control">
-        <%= f.submit "ログイン", class: "btn btn-primary w-full text-base-100 mt-2" %>
-      </div>
     <% end %>
-
-    <!-- 新規登録リンク -->
-    <div class="mt-4 text-center">
-      <p class="text-sm text-gray-600">まだアカウントをお持ちでない方は</p>
-      <%= link_to "新規登録はこちら", new_registration_path(resource_name), class: "link link-primary mt-2 inline-block" %>
-    </div>
-
-    <!-- 区切り線 -->
-    <hr class="my-6 border-gray-300">
-
-    <!-- またはのテキスト -->
-    <p class="text-center text-sm text-gray-600">または</p>
-
-    <!-- Googleログインボタン -->
-    <div class="oauth-buttons mt-4 flex justify-center">
-      <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-primary w-full flex items-center justify-center" do %>
-        <span class="text-gray-100 font-semibold">Googleでログイン</span>
-      <% end %> 
-    </div>
   </div>
+
+  <!-- 新規登録リンク -->
+  <div class="mt-6 text-center">
+    <p class="text-sm text-gray-600">まだアカウントをお持ちでない方は</p>
+    <%= link_to "新規登録はこちら", new_registration_path(resource_name), class: "link link-primary mt-2 inline-block" %>
+  </div>
+
+  <!-- 区切り線 -->
+  <hr class="my-6 border-gray-300">
+
+  <!-- またはのテキスト -->
+  <p class="text-center text-sm text-gray-600">または</p>
+
+  <!-- Googleログインボタン -->
+  <div class="oauth-buttons mt-4 flex justify-center">
+    <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-outline btn-accent flex items-center space-x-2 mt-2" do %>
+      <span class="text-gray-100 font-semibold">Googleでログイン</span>
+    <% end %>
+  </div>
+</div>

@@ -1,58 +1,64 @@
-  <div class="space-y-8">
-    <!-- 新規登録タイトル -->
-    <div>
-      <h2 class="mt-6 text-center text-xl font-extrabold text-gray-900">新規登録</h2>
-    </div>
+<div class="container mx-auto max-w-4xl px-4 py-8 text-gray-700">
+  <div class="text-center mb-8">
+    <h1 class="text-xl font-bold">新規登録</h1>
+  </div>
 
-    <!-- エラーメッセージの表示 -->
-    <%= render "shared/error_messages", resource: resource %>
+  <!-- エラーメッセージの表示 -->
+  <%= render "shared/error_messages", resource: resource %>
 
-    <!-- 新規登録フォーム -->
+  <!-- 新規登録フォーム -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
     <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), local: true) do |f| %>
-      <div class="rounded-md shadow-sm -space-y8">
+      <div class="space-y-4">
         <!-- ユーザー名入力 -->
-        <div class="form-control mb-4">
-          <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-xs", placeholder: "ユーザー名" %>
+        <div class="form-control">
+          <%= f.label :username, "ユーザー名", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "ユーザー名" %>
         </div>
 
         <!-- メールアドレス入力 -->
-        <div class="form-control mb-4">
-          <%= f.email_field :email, autocomplete: "email", class: "input input-bordered bg-gray-100 focus:bg-white text-xs", placeholder: "メールアドレス" %>
+        <div class="form-control">
+          <%= f.label :email, "メールアドレス", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.email_field :email, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "メールアドレス" %>
         </div>
 
         <!-- パスワード入力 -->
-        <div class="form-control mb-4">
-          <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered bg-gray-100 focus:bg-white text-xs", placeholder: "パスワード（4文字以上）" %>
+        <div class="form-control">
+          <%= f.label :password, "パスワード", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "パスワード（4文字以上）" %>
         </div>
 
         <!-- パスワード確認入力 -->
-        <div class="form-control mb-6">
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered bg-gray-100 focus:bg-white text-xs", placeholder: "パスワード（再入力）" %>
+        <div class="form-control">
+          <%= f.label :password_confirmation, "パスワード（再入力）", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "パスワード（再入力）" %>
+        </div>
+
+        <!-- 新規登録ボタン -->
+        <div class="form-control">
+          <%= f.submit "新規登録", class: "btn btn-primary w-full text-base-100 mt-4 hover:bg-primary-focus transition-colors duration-200" %>
         </div>
       </div>
-
-      <!-- 新規登録ボタン -->
-      <div class="form-control mb-4">
-      <%= f.submit "新規登録", class: "btn btn-primary text-base-100 mt-2" %>
-      </div>
     <% end %>
+  </div>
 
-    <!-- ログインへのリンク -->
-    <div class="mt-4 text-center">
-      <p class="text-sm text-gray-600">既にアカウントをお持ちの方</p>
-      <%= link_to "ログインはこちら", new_session_path(resource_name), class: "link link-primary mt-2 inline-block" %>
-    </div>
+  <!-- ログインへのリンク -->
+  <div class="mt-6 text-center">
+    <p class="text-sm text-gray-600">既にアカウントをお持ちの方</p>
+    <%= link_to "ログインはこちら", new_session_path(resource_name), class: "link link-primary mt-2 inline-block" %>
+  </div>
 
-    <!-- 区切り線 -->
-    <hr class="my-6 border-gray-300">
+  <!-- 区切り線 -->
+  <hr class="my-6 border-gray-300">
 
-    <!-- またはのテキスト -->
-    <p class="text-center text-sm text-gray-600">または</p>
+  <!-- またはのテキスト -->
+  <p class="text-center text-sm text-gray-600">または</p>
 
-    <!-- Googleアカウントで新規登録ボタン -->
-    <div class="oauth-buttons mt-2 flex justify-center">
-      <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-primary text-base-100" do %>
-        <span>Googleでログイン</span>
-      <% end %> 
-    </div>
+  <!-- Googleアカウントで新規登録ボタン -->
+  <div class="oauth-buttons mt-4 flex justify-center">
+    <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-accent text-base-100 w-full flex items-center justify-center" do %>
+
+      <span>Googleで登録</span>
+    <% end %>
+  </div>
 </div>
