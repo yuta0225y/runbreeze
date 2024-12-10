@@ -1,15 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.aspect-square {
-  aspect-ratio: 1 / 1;
-}
-
-.square-image {
-  @apply w-full h-0 relative;
-  padding-bottom: 100%;
-}
-
-.square-image img {
-  @apply absolute top-0 left-0 w-full h-full object-cover;
-}
