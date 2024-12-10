@@ -1,34 +1,49 @@
-<div class="navbar bg-base-100 relative" style="z-index: 1000;">
+<div class="navbar bg-base-100 shadow-md relative z-10">
   <!-- ロゴ -->
   <div class="flex-1">
-    <%= link_to 'RunBreeze', root_path, class: "btn btn-ghost text-xl", style: "font-style: italic; color: #37474F;" %>
+    <%= link_to root_path, class: "btn btn-ghost text-xl italic" do %>
+      <span>
+        <span class="text-primary">RunBreez</span><span class="text-accent">e</span>
+      </span>
+    <% end %>
   </div>
-  
+
   <!-- 投稿するボタンとドロップダウンメニュー -->
   <div class="flex-none flex items-center gap-2">
     <!-- 投稿するボタン -->
-    <%= link_to '投稿する！', new_post_path, class: "btn btn-primary text-base-100", style: "font-style: italic;" %>
+    <%= link_to '投稿する！', new_post_path, class: "btn btn-primary text-base-100 italic shadow-sm hover:shadow-md transition-all duration-200" %>
     
     <!-- ドロップダウンメニュー -->
     <div class="dropdown dropdown-end">
-      <label tabindex="0" class="btn btn-square btn-ghost">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
+      <label tabindex="0" class="btn btn-square btn-ghost hover:shadow-md transition-all duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current text-gray-700">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </label>
 
-      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 absolute top-full right-0 mt-2" style="z-index: 1002;">
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow-md bg-base-100 rounded-lg w-52 absolute top-full right-0 mt-2 z-50">
         <!-- ドロップダウンメニュー項目 -->
-        <li><%= link_to 'ブックマークした投稿', bookmarks_path, class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <li><%= link_to 'いいねした投稿', likes_path, class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <hr>
-        <li><%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <hr>
-        <li><%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <li><%= link_to 'プライバシーポリシー', privacy_policy_path, class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <li><%= link_to 'お問い合わせ', "https://forms.gle/YMuTma5zqtiNunGaA", class: "btn btn-ghost w-full text-left", style: "color: #37474F;" %></li>
-        <hr>
-        <li class="text-center text-xs mt-2" style="color: #37474F;">&copy; 2024 RunBreeze</li>
+        <li>
+          <%= link_to 'ブックマークした投稿', bookmarks_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <li>
+          <%= link_to 'いいねした投稿', likes_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <hr class="border-gray-200">
+        <li>
+          <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <hr class="border-gray-200">
+        <%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <li>
+          <%= link_to 'プライバシーポリシー', privacy_policy_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <li>
+          <%= link_to 'お問い合わせ', "https://forms.gle/YMuTma5zqtiNunGaA", class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
+        <hr class="border-gray-200">
+        <li class="text-center text-xs mt-2 text-gray-500">&copy; 2024 RunBreeze</li>
       </ul>
     </div>
   </div>
