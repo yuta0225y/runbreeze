@@ -1,14 +1,28 @@
-<h2 class="text-xl font-bold text-center mb-6">パスワードをお忘れですか？</h2>
-
-<%= form_with(model: resource, as: resource_name, url: password_path(resource_name)) do |f| %>
-  <div class="form-control mb-6">
-    <%= f.label :email, "登録したメールアドレスを入力してください", class: "label text-sm" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white", placeholder: "メールアドレス" %>
+<div class="container mx-auto max-w-4xl px-4 py-8 text-gray-700">
+  <div class="text-center mb-8">
+    <h1 class="text-xl font-bold">パスワードをお忘れですか？</h1>
+    <p class="text-sm text-gray-600 mt-2">登録したメールアドレスを入力して、パスワードリセットの手続きを行ってください。</p>
   </div>
 
-  <div class="flex justify-center gap-4">
-  <%= link_to "ログインに戻る", new_session_path(resource_name), class: "btn btn-secondary text-base-100 w-32" %>
-  <%= f.submit "送信", class: "btn btn-primary text-base-100 w-32" %>
-</div>
+  <!-- エラーメッセージの表示 -->
+  <%= render "shared/error_messages", resource: resource %>
 
-<% end %>
+  <!-- パスワードリセットフォーム -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true) do |f| %>
+      <div class="space-y-4">
+        <!-- メールアドレス入力 -->
+        <div class="form-control">
+          <%= f.label :email, "登録したメールアドレスを入力してください", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered w-full bg-gray-100 focus:bg-white text-sm mt-1", placeholder: "メールアドレス" %>
+        </div>
+
+        <!-- 送信ボタンとログインへのリンク -->
+        <div class="flex justify-center gap-4">
+          <%= link_to "ログインに戻る", new_session_path(resource_name), class: "btn btn-secondary text-base-100" %>
+          <%= f.submit "送信", class: "btn btn-primary text-base-100 w-32" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

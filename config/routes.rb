@@ -11,7 +11,8 @@ Rails.application.routes.draw do
              controllers: {
                registrations: "users/registrations",
                sessions: "users/sessions",
-               omniauth_callbacks: "users/omniauth_callbacks"
+               omniauth_callbacks: "users/omniauth_callbacks",
+               passwords: "users/passwords"
              }
 
     get "mypage" => "users#mypage", as: :mypage
