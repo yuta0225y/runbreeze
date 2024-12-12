@@ -30,7 +30,7 @@ ja:
     failure:
       already_authenticated: "すでにログインしています"
       unauthenticated: "ログインしてください"
-      invalid: "ログインできませんでした"
+      invalid: "ログインが必要です"
       not_saved: "アカウントが作成できませんでした"
       not_found_in_database: "無効な%{authentication_keys}またはパスワードです。"
     errors:
