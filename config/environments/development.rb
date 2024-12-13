@@ -35,28 +35,30 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
-  # SMTPによるメール送信の設定
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true # メール送信を有効化
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 } # 開発環境のホストとポートを指定
+
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "localhost",
-    user_name: ENV["MAILER_SENDER"],
-    password: ENV["MAILER_PASSWORD"],
-    authentication: "plain",
-    enable_starttls_auto: true
+    domain: "gmail.com", # GmailのSMTPサーバーのドメイン
+    user_name: ENV["MAILER_SENDER"], # Gmailアカウント
+    password: ENV["MAILER_PASSWORD"], # アプリパスワード
+    authentication: "plain", # 認証方式
+    enable_starttls_auto: true # TLSを有効化
   }
 
-  # Letter Openerを使った開発環境でのメール確認設定
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  # # Letter Openerを使った開発環境でのメール確認設定
+  # config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

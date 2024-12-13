@@ -19,21 +19,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit_password
-    @user = current_user
-  end
-
-  def update_password
-    @user = current_user
-    if @user.update_with_password(password_params)
-      bypass_sign_in(@user) # パスワード変更後に自動ログイン
-      redirect_to mypage_path, notice: "パスワードを更新しました。"
-    else
-      flash.now[:alert] = "パスワードの更新に失敗しました。"
-      render :edit_password, status: :unprocessable_entity
-    end
-  end
-
   # 他のユーザーのプロフィールを表示
   def show
     @user = User.find(params[:id])

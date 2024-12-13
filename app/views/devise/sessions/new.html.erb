@@ -1,4 +1,3 @@
-<!-- app/views/static_pages/login.html.erb -->
 <div class="container mx-auto max-w-4xl px-4 py-8 text-gray-700 space-y-8">
   <!-- ログインタイトル -->
   <div>
@@ -51,8 +50,8 @@
 
   <!-- Googleログインボタン -->
   <div class="oauth-buttons mt-4 flex justify-center">
-    <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-outline btn-accent flex items-center space-x-2 mt-2" do %>
-      <span class="text-gray-100 font-semibold">Googleでログイン</span>
+    <%= button_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false }, class: "btn btn-accent text-base-100 flex items-center space-x-2 mt-2" do %>
+      <span>Googleでログイン</span>
     <% end %>
   </div>
 </div>
