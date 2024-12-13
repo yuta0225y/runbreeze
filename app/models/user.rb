@@ -3,13 +3,17 @@ class User < ApplicationRecord
   :recoverable, :rememberable, :validatable,
   :omniauthable, omniauth_providers: %i[google_oauth2]
 
+  # 一般的なバリデーション（プロフィール更新時のみ適用）
   validates :username, presence: true,
                        uniqueness: { case_sensitive: false },
-                       length: { minimum: 3, maximum: 25 }
+                       length: { minimum: 3, maximum: 25 },
+                       on: :update_profile
 
   validates :email, presence: true,
                     uniqueness: true,
-                    format: { with: URI::MailTo::EMAIL_REGEXP }
+                    format: { with: URI::MailTo::EMAIL_REGEXP },
+                    on: :update_profile
+
 
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:encrypted_password] }
 
