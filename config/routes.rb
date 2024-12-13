@@ -12,16 +12,12 @@ Rails.application.routes.draw do
                registrations: "users/registrations",
                sessions: "users/sessions",
                omniauth_callbacks: "users/omniauth_callbacks",
-               passwords: "users/passwords"
              }
 
     get "mypage" => "users#mypage", as: :mypage
 
     get "edit_profile" => "users#edit_profile", as: :edit_profile
     patch "update_profile" => "users#update_profile", as: :update_profile
-
-    get "edit_password" => "users#edit_password", as: :edit_password
-    patch "update_password" => "users#update_password", as: :update_password
 
     get "users/:id" => "users#show", as: :user_profile
 
