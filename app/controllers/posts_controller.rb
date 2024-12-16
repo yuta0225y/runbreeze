@@ -16,25 +16,25 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     @post.category_id = nil if params[:draft_save].present? && @post.category_id.blank?
-  
+
     if params[:draft_save].present?
       @post.status = :draft
     else
       @post.status = :published
     end
-  
+
     if @post.save
       redirect_to(params[:draft_save].present? ? drafts_posts_path : posts_path, notice: "保存しました。")
     else
       flash.now[:danger] = "保存に失敗しました。"
       render :new, status: :unprocessable_entity
     end
-  end  
-  
+  end
+
   def update
     # 既存の投稿を取得
     @post = current_user.posts.find(params[:id])
-  
+
     # 下書き保存と公開の分岐
     if params[:draft_save].present?
       @post.status = :draft # 下書きとして保存
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
       @post.status = :published # 公開
       redirect_path = post_path(@post) # 投稿詳細ページにリダイレクト
     end
-  
+
     if @post.update(post_params)
       redirect_to redirect_path, notice: params[:draft_save].present? ? "下書きを更新しました。" : "投稿を公開しました。"
     else
