@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_05_054651) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_13_075129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,8 +63,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_054651) do
     t.bigint "user_id", null: false
     t.string "title", null: false
     t.text "content", null: false
-    t.bigint "category_id", null: false
-    t.integer "status"
+    t.bigint "category_id"
+    t.integer "status", default: 0, null: false
     t.text "ai_corrected_content"
     t.string "reference_url"
     t.datetime "created_at", null: false

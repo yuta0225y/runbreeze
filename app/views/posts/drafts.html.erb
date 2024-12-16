@@ -1,0 +1,16 @@
+<div class="container mx-auto px-4 py-6 bg-base-100 pt-16 pb-20">
+  <h1 class="text-2xl text-gray-700 font-bold mb-6">下書き保存した投稿</h1>
+
+  <% if @drafts.present? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+      <%= render partial: 'posts/post_card', collection: @drafts, as: :post %>
+    </div>
+
+    <!-- ページネーション -->
+    <div class="mt-8 text-center text-sm text-gray-500">
+      <%= paginate @drafts %>
+    </div>
+  <% else %>
+    <p class="text-center text-gray-500 mt-6">現在、下書きはありません。</p>
+  <% end %>
+</div>

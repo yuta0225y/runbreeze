@@ -9,9 +9,14 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :like_users, through: :likes, source: :user
 
-  validates :title, presence: true, length: { maximum: 30 }
-  validates :content, presence: true, length: { maximum: 1000 }
-  validates :category_id, presence: true
+  # 投稿のステータス
+  enum status: { draft: 0, published: 1 }
+
+  validates :title, presence: true, length: { maximum: 30 }, if: :published?
+  validates :content, presence: true, length: { maximum: 1000 }, if: :published?
+  validates :category_id, presence: true, if: :published?
+
+  # タグの選択数を制限
   validate :tag_selection_limit
 
   mount_uploader :post_image, PostImageUploader

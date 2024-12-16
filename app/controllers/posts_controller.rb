@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :set_tags, only: [ :new, :edit, :update ]
 
   def index
-    @q = Post.ransack(params[:q])
+    @q = Post.published.ransack(params[:q])
     @posts = @q.result(distinct: true).includes(:tags, :user, :category).order(created_at: :desc).page(params[:page]).per(6)
     @categories = Category.all
   end
@@ -15,13 +15,40 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(post_params)
-    if @post.save
-      # タグの関連付け
-      @post.tag_ids = params[:post][:tag_ids] if params[:post][:tag_ids].present?
-      redirect_to posts_path, notice: "投稿しました"
+    @post.category_id = nil if params[:draft_save].present? && @post.category_id.blank?
+
+    if params[:draft_save].present?
+      @post.status = :draft
     else
-      flash.now[:danger] = "投稿に失敗しました"
+      @post.status = :published
+    end
+
+    if @post.save
+      redirect_to(params[:draft_save].present? ? drafts_posts_path : posts_path, notice: "保存しました。")
+    else
+      flash.now[:danger] = "保存に失敗しました。"
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    # 既存の投稿を取得
+    @post = current_user.posts.find(params[:id])
+
+    # 下書き保存と公開の分岐
+    if params[:draft_save].present?
+      @post.status = :draft # 下書きとして保存
+      redirect_path = drafts_posts_path # 下書き一覧ページにリダイレクト
+    else
+      @post.status = :published # 公開
+      redirect_path = post_path(@post) # 投稿詳細ページにリダイレクト
+    end
+
+    if @post.update(post_params)
+      redirect_to redirect_path, notice: params[:draft_save].present? ? "下書きを更新しました。" : "投稿を公開しました。"
+    else
+      flash.now[:danger] = "更新に失敗しました。"
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -32,18 +59,13 @@ class PostsController < ApplicationController
   def edit
   end
 
-  def update
-    if @post.update(post_params)
-      redirect_to post_path(@post), notice: "更新しました"
-    else
-      flash.now[:danger] = "更新に失敗しました"
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @post.destroy!
     redirect_to posts_path, notice: "削除しました", status: :see_other
+  end
+
+  def drafts
+    @drafts = current_user.posts.draft.order(created_at: :desc).page(params[:page]).per(6)
   end
 
   private
