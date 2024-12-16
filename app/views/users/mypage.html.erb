@@ -39,22 +39,22 @@
     <% end %>
   </div>
 
-  <!-- 投稿セクション -->
-  <% if @user.posts.any? %>
-    <div class="bg-base-100 p-6 rounded-lg shadow-md text-left">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <% @user.posts.each do |post| %>
-          <%= render 'posts/post_card', post: post %>
-        <% end %>
-      </div>
+  <!-- ユーザーの投稿一覧 -->
+  <% if @posts.any? %>
+  <div class="bg-base-100 p-6 rounded-lg shadow-md text-left">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <% @posts.each do |post| %>
+        <%= render 'posts/post_card', post: post %>
+      <% end %>
     </div>
-  <% else %>
-    <div class="bg-base-100 p-6 rounded-lg shadow-md text-left">
-      <h3 class="text-xm font-semibold mb-4 text-gray-700">投稿一覧</h3>
-      <p class="text-gray-500">まだ投稿がありません。</p>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="bg-base-100 p-6 rounded-lg shadow-md text-left">
+    <h3 class="text-xm font-semibold mb-4 text-gray-700">投稿一覧</h3>
+    <p class="text-gray-500">まだ投稿がありません。</p>
+  </div>
+<% end %>
+
 
 <!-- パスワードリセットリンク -->
 <div class="mt-6 text-center text-sm text-gray-500">
