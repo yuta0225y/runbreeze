@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def mypage
     @user = current_user
+    @posts = @user.posts.published.order(created_at: :desc).page(params[:page]).per(6)
   end
 
   def edit_profile
