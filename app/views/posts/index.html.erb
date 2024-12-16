@@ -34,7 +34,7 @@
     <% if @posts.present? %>
       <%= render partial: 'posts/post_card', collection: @posts, as: :post %>
     <% else %>
-      < class="text-center text-gray-600">投稿がありません。</>
+      <p class="text-gray-700 text-center">該当する投稿が見つかりませんでした。</p>
     <% end %>
   </div>
 
