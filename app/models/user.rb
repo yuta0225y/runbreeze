@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:encrypted_password] }
   validates :password_confirmation, presence: true, if: -> { password.present? }
-  validates :running_goal, inclusion: { in: [ "ダイエット", "マラソン完走", "健康維持", "ストレス解消" ] }, allow_blank: true
+  validates :running_goal, inclusion: { in: [ "ダイエット", "記録更新", "健康維持", "ストレス解消", "体力向上", "仲間づくり" ] }, allow_blank: true
   validates :running_specs, length: { maximum: 50 }, allow_blank: true
   validates :twitter_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
   validates :instagram_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
