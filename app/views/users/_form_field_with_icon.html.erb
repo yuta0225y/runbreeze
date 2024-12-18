@@ -1,0 +1,23 @@
+<%# フォームのフィールドをアイコン付きで表示する %>
+<div class="form-control mb-4">
+  <%= f.label field, "#{label_text}", class: "label text-sm text-gray-600" %>
+  
+  <% if icon.present? %>
+    <div class="flex items-center border rounded-md px-3 py-2 mt-2">
+      <%= image_tag icon, alt: "#{label_text}アイコン", class: icon_classes %>
+      <%= form_field %>
+    </div>
+  <% else %>
+    <div class="mt-2">
+      <%= form_field %>
+    </div>
+  <% end %>
+  
+  <% if helper_text.present? %>
+    <small class="text-gray-500"><%= helper_text %></small>
+  <% end %>
+  
+  <% if max_length.present? %>
+    <div class="text-right text-sm text-gray-500" id="<%= "#{field}_count" %>">0/<%= max_length %></div>
+  <% end %>
+</div>
