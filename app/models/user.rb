@@ -14,17 +14,13 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP },
                     on: :update_profile
 
-
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:encrypted_password] }
-
   validates :password_confirmation, presence: true, if: -> { password.present? }
-
   validates :running_goal, inclusion: { in: [ "ダイエット", "マラソン完走", "健康維持", "ストレス解消" ] }, allow_blank: true
-
-  validates :running_specs, length: { maximum: 255 }, allow_blank: true
-
+  validates :running_specs, length: { maximum: 50 }, allow_blank: true
+  validates :twitter_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
+  validates :instagram_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
   validates :reference_url1, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
-
   validates :bio, length: { maximum: 200 }, allow_blank: true
 
   # プロフィール画像アップロード

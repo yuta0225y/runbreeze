@@ -1,63 +1,163 @@
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
   <%= form_with(model: @user, url: update_profile_path, method: :patch, local: true, html: { multipart: true }) do |f| %>
-    <!-- プロフィール画像 -->
-    <div class="form-control mb-6">
-      <%= f.label :profile_image, "プロフィール画像", class: "label text-sm text-gray-600" %>
-      <%= f.file_field :profile_image, class: "file-input file-input-bordered w-full" %>
-      <% if @user.profile_image.present? %>
-        <div class="mt-4 flex justify-center">
-          <%= image_tag @user.profile_image.url, 
-                        alt: "プロフィール画像", 
-                        class: "rounded-full w-32 h-32 object-cover shadow-lg" %>
-        </div>
-      <% end %>
-    </div>
+    
+    <h2 class="text-lg font-bold mb-4 border-b pb-2">基本情報</h2>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :profile_image, 
+        label_text: "プロフィール画像", 
+        icon: nil,
+        icon_classes: '', 
+        form_field: f.file_field(:profile_image, class: "file-input file-input-bordered w-full"), 
+        helper_text: nil, 
+        optional: true,
+        counter_id: nil,
+        max_length: nil %>
+    
+    <% if @user.profile_image.present? %>
+      <div class="mt-4 flex justify-center">
+        <%= image_tag @user.profile_image.url, 
+                      alt: "プロフィール画像", 
+                      class: "rounded-full w-32 h-32 object-cover shadow-lg" %>
+      </div>
+    <% end %>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :username, 
+        label_text: "表示名", 
+        icon: 'user2.svg', 
+        icon_classes: 'w-5 h-5 text-gray-600 mr-2', 
+        form_field: f.text_field(:username, class: "input input-bordered flex-1 w-full", placeholder: "例: taro_yamada", aria: { label: "表示名" }), 
+        helper_text: nil, 
+        optional: false,
+        counter_id: nil,
+        max_length: nil %>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :email, 
+        label_text: "メールアドレス", 
+        icon: 'mail.svg', 
+        icon_classes: 'w-5 h-5 text-gray-600 mr-2', 
+        form_field: f.email_field(:email, class: "input input-bordered flex-1 w-full", placeholder: "例: taro@example.com", aria: { label: "メールアドレス" }), 
+        helper_text: nil, 
+        optional: false,
+        counter_id: nil,
+        max_length: nil %>
 
-    <!-- ユーザー名 -->
-    <div class="form-control mb-4">
-      <%= f.label :username, "ユーザー名", class: "label text-sm text-gray-600" %>
-      <%= f.text_field :username, class: "input input-bordered w-full", placeholder: "例: taro_yamada" %>
-    </div>
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :running_goal, 
+        label_text: "目的", 
+        icon: 'chart-line.svg', 
+        icon_classes: 'w-5 h-5 text-gray-600 mr-2', 
+        form_field: f.select(:running_goal, 
+            options_for_select(['ダイエット', '記録更新', '健康維持', 'ストレス解消', '体力向上', '仲間づくり'], @user.running_goal), 
+            { include_blank: '選択してください' }, 
+            class: "select select-bordered flex-1 w-full",
+            aria: { label: "目的" } 
+        ), 
+        helper_text: nil, 
+        optional: false,
+        counter_id: nil,
+        max_length: nil %>
 
-    <!-- メールアドレス -->
-    <div class="form-control mb-4">
-      <%= f.label :email, "メールアドレス", class: "label text-sm text-gray-600" %>
-      <%= f.email_field :email, class: "input input-bordered w-full", placeholder: "例: taro@example.com" %>
-    </div>
-
-    <!-- ランニングの目的 -->
-    <div class="form-control mb-4">
-      <%= f.label :running_goal, "ランニングの目的", class: "label text-sm text-gray-600" %>
-      <%= f.select :running_goal, 
-          options_for_select(['ダイエット', 'マラソン完走', '健康維持', 'ストレス解消'], @user.running_goal), 
-          { include_blank: '選択してください' }, 
-          class: "select select-bordered w-full" %>
-    </div>
-
-    <!-- 目標 -->
-    <div class="form-control mb-4">
-      <%= f.label :running_specs, "目標", class: "label text-sm text-gray-600" %>
-      <%= f.text_field :running_specs, class: "input input-bordered w-full", placeholder: "例: フルマラソンを完走したい" %>
-    </div>
-
-    <!-- SNSリンク -->
-    <div class="form-control mb-4">
-      <%= f.label :reference_url1, "SNSリンク等", class: "label text-sm text-gray-600" %>
-      <%= f.url_field :reference_url1, class: "input input-bordered w-full", placeholder: "例: https://twitter.com/username" %>
-      <small class="text-gray-500">SNSやブログのURLを共有できます</small>
-    </div>
-
-    <!-- 自己紹介 -->
-    <div class="form-control mb-4">
-      <%= f.label :bio, "自己紹介", class: "label text-sm text-gray-600" %>
-      <%= f.text_area :bio, class: "textarea textarea-bordered w-full", placeholder: "例: こんにちは、ランニングが大好きな山田太郎です。", maxlength: 200 %>
-      <small class="text-gray-500">200文字以内で入力してください</small>
-    </div>
-
-    <!-- ボタン -->
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :running_specs, 
+        label_text: "目標", 
+        icon: 'target.svg', 
+        icon_classes: 'w-5 h-5 text-gray-600 mr-2', 
+        form_field: f.text_area(:running_specs, class: "input input-bordered flex-1 w-full", placeholder: "例: フルマラソンを完走したい", maxlength: 50, id: "running_specs", aria: { label: "目標" }), 
+        helper_text: nil, 
+        optional: true,
+        counter_id: "running_specs_count",
+        max_length: 50 %>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :bio, 
+        label_text: "自己紹介", 
+        icon: nil,
+        icon_classes: '', 
+        form_field: f.text_area(:bio, class: "input input-bordered w-full", placeholder: "例: よろしくお願いします！", maxlength: 200, id: "bio", aria: { label: "自己紹介" }), 
+        helper_text: nil, 
+        optional: true,
+        counter_id: "bio_count",
+        max_length: 200 %>
+    
+    <h2 class="text-lg font-bold mb-4 mt-6 border-b pb-2">追加情報</h2>
+    
+    <!-- 個人URL (アイコン不要) -->
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :reference_url1, 
+        label_text: "個人URL", 
+        icon: nil,
+        icon_classes: '', 
+        form_field: f.url_field(:reference_url1, class: "input input-bordered w-full", placeholder: "例: https://example.com", aria: { label: "個人URL" }), 
+        helper_text: "個人のURLを入力してください", 
+        optional: true,
+        counter_id: nil,
+        max_length: nil %>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :twitter_url, 
+        label_text: "X", 
+        icon: 'x.svg', 
+        icon_classes: 'w-5 h-5 text-blue-500 mr-2', 
+        form_field: f.url_field(:twitter_url, class: "input input-bordered flex-1 w-full", placeholder: "例: https://x.com/username", aria: { label: "X" }), 
+        helper_text: "X（旧Twitter）のURLを入力してください", 
+        optional: true,
+        counter_id: nil,
+        max_length: nil %>
+    
+    <%= render 'form_field_with_icon', 
+        f: f, 
+        field: :instagram_url, 
+        label_text: "インスタグラム", 
+        icon: 'instagram.svg', 
+        icon_classes: 'w-6 h-6 text-pink-500 mr-2', 
+        form_field: f.url_field(:instagram_url, class: "input input-bordered flex-1 w-full", placeholder: "例: https://www.instagram.com/username", aria: { label: "インスタグラム" }), 
+        helper_text: "インスタグラムのURLを入力してください", 
+        optional: true,
+        counter_id: nil,
+        max_length: nil %>
+    
     <div class="flex justify-center space-x-4 mt-6">
       <%= link_to "マイページに戻る", mypage_path, class: "btn btn-secondary px-6 py-2 text-sm text-base-100 shadow-md hover:shadow-lg" %>
       <%= f.submit "プロフィールを更新", class: "btn btn-primary px-6 py-2 text-sm text-base-100 shadow-md hover:shadow-lg" %>
     </div>
   <% end %>
 </div>
+
+<!-- 文字数カウンタースクリプト -->
+<script>
+document.addEventListener("turbo:load", () => { // "turbo:load"に変更
+  const fieldsWithCounters = [
+    { fieldId: "bio", counterId: "bio_count", maxLength: 200 },
+    { fieldId: "running_specs", counterId: "running_specs_count", maxLength: 200 }
+  ];
+
+  fieldsWithCounters.forEach(({ fieldId, counterId, maxLength }) => {
+    const field = document.getElementById(fieldId);
+    const counter = document.getElementById(counterId);
+
+    if (field && counter) {
+      const updateCounter = () => {
+        const currentLength = field.value.length;
+        counter.textContent = `${currentLength}/${maxLength}`;
+      };
+
+      // 初期カウントの設定
+      updateCounter();
+
+      // 入力イベントの監視
+      field.addEventListener("input", updateCounter);
+    }
+  });
+});
+</script>

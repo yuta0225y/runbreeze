@@ -37,6 +37,8 @@ class UsersController < ApplicationController
       :profile_image,
       :running_goal,
       :running_specs,
+      :twitter_url,
+      :instagram_url,
       :reference_url1,
       :bio
     )

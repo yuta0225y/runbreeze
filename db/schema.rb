@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_13_075129) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_18_093535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,15 +88,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_13_075129) do
     t.string "encrypted_password", default: "", null: false
     t.string "username", default: "", null: false
     t.string "profile_image"
-    t.integer "gender"
-    t.string "age"
     t.string "running_goal"
     t.string "running_specs"
     t.string "instagram_url"
     t.string "twitter_url"
-    t.string "facebook_url"
     t.string "reference_url1"
-    t.string "reference_url2"
     t.text "bio"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
