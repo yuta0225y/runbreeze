@@ -1,23 +1,23 @@
 <div class="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- プロフィール情報セクション -->
   <%= render 'profile', user: @user, show_edit_button: true %>
-
-  <div role="tablist" class="tabs tabs-bordered">
-  
+  <div role="tablist" class="tabs tabs-bordered overflow-x-auto whitespace-nowrap">
     <!-- 投稿一覧タブ -->
     <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="投稿" id="tab-posts" checked="checked" />
-    <div role="tabpanel" class="tab-content p-10">
+    <div role="tabpanel" class="tab-content p-10 inline-block align-top">
       <% if @posts.any? %>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <% @posts.each do |post| %>
-            <%= render 'posts/post_card', post: post %>
+            <div class="w-full max-w-md">
+              <%= render 'posts/post_card', post: post %>
+            </div>
           <% end %>
         </div>
-        <div class="mt-6">
+        <div class="mt-6 flex justify-center">
           <%= paginate @posts, param_name: :page %>
         </div>
       <% else %>
-        <div class="text-gray-500 flex items-center">
+        <div class="text-gray-500 flex items-center justify-center h-40">
           <p>まだ投稿がありません。</p>
         </div>
       <% end %>
@@ -25,18 +25,20 @@
 
     <!-- いいねした投稿タブ -->
     <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="いいね" id="tab-likes" />
-    <div role="tabpanel" class="tab-content p-10">
+    <div role="tabpanel" class="tab-content p-10 inline-block align-top">
       <% if @liked_posts.any? %>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <% @liked_posts.each do |post| %>
-            <%= render 'posts/post_card', post: post %>
+            <div class="w-full max-w-md">
+              <%= render 'posts/post_card', post: post %>
+            </div>
           <% end %>
         </div>
-        <div class="mt-6">
+        <div class="mt-6 flex justify-center">
           <%= paginate @liked_posts, param_name: :liked_page %>
         </div>
       <% else %>
-        <div class="text-gray-500 flex items-center">
+        <div class="text-gray-500 flex items-center justify-center h-40">
           <p>いいねした投稿はありません。</p>
         </div>
       <% end %>
@@ -44,18 +46,20 @@
 
     <!-- ブックマークした投稿タブ -->
     <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="ブックマーク" id="tab-bookmarks" />
-    <div role="tabpanel" class="tab-content p-10">
+    <div role="tabpanel" class="tab-content p-10 inline-block align-top">
       <% if @bookmarked_posts.any? %>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <% @bookmarked_posts.each do |post| %>
-            <%= render 'posts/post_card', post: post %>
+            <div class="w-full max-w-md">
+              <%= render 'posts/post_card', post: post %>
+            </div>
           <% end %>
         </div>
-        <div class="mt-6">
+        <div class="mt-6 flex justify-center">
           <%= paginate @bookmarked_posts, param_name: :bookmarked_page %>
         </div>
       <% else %>
-        <div class="text-gray-500 flex items-center">
+        <div class="text-gray-500 flex items-center justify-center h-40">
           <p>ブックマークした投稿はありません。</p>
         </div>
       <% end %>
@@ -63,18 +67,20 @@
 
     <!-- 下書き保存した投稿タブ -->
     <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="下書き" id="tab-drafts" />
-    <div role="tabpanel" class="tab-content p-10">
+    <div role="tabpanel" class="tab-content p-10 inline-block align-top">
       <% if @drafts.any? %>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <% @drafts.each do |post| %>
-            <%= render 'posts/post_card', post: post %>
+            <div class="w-full max-w-md">
+              <%= render 'posts/post_card', post: post %>
+            </div>
           <% end %>
         </div>
-        <div class="mt-6">
+        <div class="mt-6 flex justify-center">
           <%= paginate @drafts, param_name: :draft_page %>
         </div>
       <% else %>
-        <div class="text-gray-500 flex items-center">
+        <div class="text-gray-500 flex items-center justify-center h-40">
           <p>まだ下書きがありません。</p>
         </div>
       <% end %>
