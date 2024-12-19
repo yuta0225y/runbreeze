@@ -5,9 +5,6 @@ class UsersController < ApplicationController
   def mypage
     @user = current_user
     @posts = @user.posts.published.order(created_at: :desc).page(params[:page]).per(6)
-    @liked_posts = @user.like_posts.published.order(created_at: :desc).page(params[:liked_page]).per(6)
-    @bookmarked_posts = @user.bookmark_posts.published.order(created_at: :desc).page(params[:bookmarked_page]).per(6)
-    @drafts = @user.posts.draft.order(created_at: :desc).page(params[:draft_page]).per(6)
     @show_edit_button = true
   end
 
