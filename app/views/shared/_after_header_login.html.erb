@@ -8,9 +8,8 @@
     <% end %>
   </div>
 
-  <!-- 投稿するボタンとドロップダウンメニュー -->
+  <!-- 投稿するボタン -->
   <div class="flex-none flex items-center gap-2">
-    <!-- 投稿するボタン -->
     <%= link_to '投稿する！', new_post_path, class: "btn btn-primary text-base-100 italic shadow-sm hover:shadow-md transition-all duration-200" %>
     
     <!-- ドロップダウンメニュー -->
@@ -20,23 +19,16 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </label>
-
       <ul tabindex="0" class="dropdown-content menu p-2 shadow-md bg-base-100 rounded-lg w-52 absolute top-full right-0 mt-2 z-50">
-        <!-- ドロップダウンメニュー項目 -->
         <li>
-          <%= link_to 'ブックマークした投稿', bookmarks_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+          <%= link_to 'マイページ', mypage_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
-        <li>
-          <%= link_to 'いいねした投稿', likes_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
-        </li>
-        <li>
-          <%= link_to '下書き保存した投稿', drafts_posts_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
-        <hr class="border-gray-200">
         <li>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <hr class="border-gray-200">
-        <%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        <li>
+          <%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <li>
           <%= link_to 'プライバシーポリシー', privacy_policy_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
