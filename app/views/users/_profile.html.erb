@@ -1,0 +1,70 @@
+<div class="bg-base-100 p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
+  <!-- プロフィール画像 -->
+  <div class="relative">
+    <%= image_tag(user.profile_image.present? ? user.profile_image.url : 'default_profile_image.png',
+      alt: "プロフィール画像",
+      class: "rounded-full w-24 h-24 object-cover shadow-lg border border-gray-200") %>
+  </div>
+
+  <!-- 表示名 -->
+  <h2 class="text-2xl font-bold text-gray-800"><%= user.username %></h2>
+
+  <!-- URLリンク -->
+  <div class="flex justify-center space-x-4 mt-2">
+    <% if user.reference_url1.present? %>
+      <a href="<%= user.reference_url1 %>" target="_blank" rel="noopener noreferrer" aria-label="個人URL" 
+         class="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
+        <%= image_tag 'link.svg', alt: 'リンクアイコン', class: "w-5 h-5" %>
+      </a>
+    <% end %>
+
+    <% if user.twitter_url.present? %>
+      <a href="<%= user.twitter_url %>" target="_blank" rel="noopener noreferrer" aria-label="X（旧Twitter）"
+         class="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors">
+        <%= image_tag 'x.svg', alt: 'Xアイコン', class: "w-5 h-5" %>
+      </a>
+    <% end %>
+
+    <% if user.instagram_url.present? %>
+      <a href="<%= user.instagram_url %>" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+         class="flex items-center space-x-1 text-pink-500 hover:text-pink-700 transition-colors">
+        <%= image_tag 'instagram.svg', alt: 'Instagramアイコン', class: "w-6 h-6" %>
+      </a>
+    <% end %>
+  </div>
+
+  <!-- ランニング情報と自己紹介 -->
+  <div class="w-full mt-4 space-y-2">
+    <div class="flex items-center">
+      <%= image_tag 'chart-line.svg', alt: 'ランニングの目的アイコン', class: "w-5 h-5 mr-2" %>
+      <p class="text-base text-gray-700">
+        <strong class="mr-1">目的:</strong>
+        <%= user.running_goal.present? ? user.running_goal : '<span class="text-gray-500">未設定</span>'.html_safe %>
+      </p>
+    </div>
+    <div class="flex items-center">
+      <%= image_tag 'target.svg', alt: '目標アイコン', class: "w-6 h-6 mr-1" %>
+      <p class="text-base text-gray-700">
+        <strong class="mr-1">目標:</strong>
+        <%= user.running_specs.present? ? user.running_specs : '<span class="text-gray-500">未設定</span>'.html_safe %>
+      </p>
+    </div>
+    <div class="flex items-center">
+      <%= image_tag 'user.svg', alt: '自己紹介アイコン', class: "w-5 h-5 mr-2" %>
+      <p class="text-base text-gray-700 leading-relaxed">
+        <strong class="mr-1">自己紹介:</strong>
+        <%= user.bio.present? ? user.bio : '<span class="text-gray-500">未設定</span>'.html_safe %>
+      </p>
+    </div>
+  </div>
+
+  <!-- プロフィール編集ボタン（mypageのみ表示） -->
+  <% if show_edit_button %>
+    <div class="flex justify-center mt-4">
+      <%= link_to edit_profile_path, class: "btn btn-primary btn-sm text-base-100 shadow-md hover:shadow-lg inline-flex items-center space-x-1 px-4 py-2" do %>
+        <%= image_tag 'edit.svg', alt: '編集アイコン', class: "w-4 h-4" %>
+        <span>編集</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
