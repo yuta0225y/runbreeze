@@ -1,88 +1,83 @@
 <div class="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  
   <!-- プロフィール情報セクション -->
-  <div class="bg-base-100 p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
-    <!-- プロフィール画像 -->
-    <div class="relative">
-      <%= image_tag(@user.profile_image.present? ? @user.profile_image.url : 'default_profile_image.png',
-        alt: "プロフィール画像",
-        class: "rounded-full w-24 h-24 object-cover shadow-lg border border-gray-200") %>
-    </div>
+  <%= render 'profile', user: @user, show_edit_button: true %>
 
-    <!-- 表示名 -->
-    <h2 class="text-2xl font-bold text-gray-800"><%= @user.username %></h2>
-
-    <!-- URLリンク -->
-    <div class="flex justify-center space-x-4 mt-2">
-      <% if @user.reference_url1.present? %>
-        <a href="<%= @user.reference_url1 %>" target="_blank" rel="noopener noreferrer" aria-label="個人URL" 
-           class="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
-          <%= image_tag 'link.svg', alt: 'リンクアイコン', class: "w-5 h-5" %>
-        </a>
-      <% end %>
-
-      <% if @user.twitter_url.present? %>
-        <a href="<%= @user.twitter_url %>" target="_blank" rel="noopener noreferrer" aria-label="X（旧Twitter）"
-           class="flex items-center space-x-1 text-blue-500 hover:text-blue-700 transition-colors">
-          <%= image_tag 'x.svg', alt: 'Xアイコン', class: "w-5 h-5" %>
-        </a>
-      <% end %>
-
-      <% if @user.instagram_url.present? %>
-        <a href="<%= @user.instagram_url %>" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-           class="flex items-center space-x-1 text-pink-500 hover:text-pink-700 transition-colors">
-          <%= image_tag 'instagram.svg', alt: 'Instagramアイコン', class: "w-6 h-6" %>
-        </a>
+  <div role="tablist" class="tabs tabs-bordered">
+  
+    <!-- 投稿一覧タブ -->
+    <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="投稿" id="tab-posts" checked="checked" />
+    <div role="tabpanel" class="tab-content p-10">
+      <% if @posts.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <% @posts.each do |post| %>
+            <%= render 'posts/post_card', post: post %>
+          <% end %>
+        </div>
+        <div class="mt-6">
+          <%= paginate @posts, param_name: :page %>
+        </div>
+      <% else %>
+        <div class="text-gray-500 flex items-center">
+          <p>まだ投稿がありません。</p>
+        </div>
       <% end %>
     </div>
 
-    <!-- ランニング情報と自己紹介 -->
-    <div class="w-full mt-4 space-y-2">
-      <div class="flex items-center">
-        <%= image_tag 'chart-line.svg', alt: 'ランニングの目的アイコン', class: "w-5 h-5 mr-2" %>
-        <p class="text-base text-gray-700">
-          <strong class="mr-1">目的:</strong>
-          <%= @user.running_goal.present? ? @user.running_goal : '<span class="text-gray-500">未設定</span>'.html_safe %>
-        </p>
-      </div>
-      <div class="flex items-center">
-        <%= image_tag 'target.svg', alt: '目標アイコン', class: "w-6 h-6 mr-1" %>
-        <p class="text-base text-gray-700">
-          <strong class="mr-1">目標:</strong>
-          <%= @user.running_specs.present? ? @user.running_specs : '<span class="text-gray-500">未設定</span>'.html_safe %>
-        </p>
-      </div>
-      <div class="flex items-center">
-        <%= image_tag 'user.svg', alt: '自己紹介アイコン', class: "w-5 h-5 mr-2" %>
-        <p class="text-base text-gray-700 leading-relaxed">
-          <strong class="mr-1">自己紹介:</strong>
-          <%= @user.bio.present? ? @user.bio : '<span class="text-gray-500">未設定</span>'.html_safe %>
-        </p>
-      </div>
-    </div>
-
-    <!-- プロフィール編集ボタン -->
-    <div class="flex justify-center mt-4">
-      <%= link_to edit_profile_path, class: "btn btn-primary btn-sm text-base-100 shadow-md hover:shadow-lg inline-flex items-center space-x-1 px-4 py-2" do %>
-        <%= image_tag 'edit.svg', alt: '編集アイコン', class: "w-4 h-4" %>
-        <span>編集</span>
+    <!-- いいねした投稿タブ -->
+    <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="いいね" id="tab-likes" />
+    <div role="tabpanel" class="tab-content p-10">
+      <% if @liked_posts.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <% @liked_posts.each do |post| %>
+            <%= render 'posts/post_card', post: post %>
+          <% end %>
+        </div>
+        <div class="mt-6">
+          <%= paginate @liked_posts, param_name: :liked_page %>
+        </div>
+      <% else %>
+        <div class="text-gray-500 flex items-center">
+          <p>いいねした投稿はありません。</p>
+        </div>
       <% end %>
     </div>
-  </div>
 
-  <!-- ユーザーの投稿一覧 -->
-  <div class="bg-base-100 p-6 rounded-lg shadow-md">
-    <h3 class="text-lg font-semibold text-gray-800 mb-4">投稿一覧</h3>
-    <% if @posts.any? %>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <% @posts.each do |post| %>
-          <%= render 'posts/post_card', post: post %>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="text-gray-500 flex items-center">
-        <p>まだ投稿がありません。</p>
-      </div>
-    <% end %>
+    <!-- ブックマークした投稿タブ -->
+    <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="ブックマーク" id="tab-bookmarks" />
+    <div role="tabpanel" class="tab-content p-10">
+      <% if @bookmarked_posts.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <% @bookmarked_posts.each do |post| %>
+            <%= render 'posts/post_card', post: post %>
+          <% end %>
+        </div>
+        <div class="mt-6">
+          <%= paginate @bookmarked_posts, param_name: :bookmarked_page %>
+        </div>
+      <% else %>
+        <div class="text-gray-500 flex items-center">
+          <p>ブックマークした投稿はありません。</p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 下書き保存した投稿タブ -->
+    <input type="radio" name="mypage_tabs" role="tab" class="tab" aria-label="下書き" id="tab-drafts" />
+    <div role="tabpanel" class="tab-content p-10">
+      <% if @drafts.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <% @drafts.each do |post| %>
+            <%= render 'posts/post_card', post: post %>
+          <% end %>
+        </div>
+        <div class="mt-6">
+          <%= paginate @drafts, param_name: :draft_page %>
+        </div>
+      <% else %>
+        <div class="text-gray-500 flex items-center">
+          <p>まだ下書きがありません。</p>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

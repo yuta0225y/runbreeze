@@ -1,3 +1,3 @@
 <span class="prev">
-  <%= link_to_unless current_page.first?, "前へ", url, class: "join-item btn btn-sm btn-outline", rel: 'prev', remote: true %>
+  <%= link_to_unless current_page.first?, "前へ", url, class: "join-item btn btn-sm #{'btn-primary text-white' if current_page.first?}", rel: 'prev', remote: true %>
 </span>

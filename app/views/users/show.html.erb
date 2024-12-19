@@ -1,48 +1,24 @@
-<div class="flex flex-col items-center text-sm space-y-2">
-  <% if @user.profile_image.present? %>
-    <%= image_tag @user.profile_image.url, 
-      alt: @user.username, 
-      style: "border-radius: 50%; width: 4rem; height: 4rem;" %>
-  <% else %>
-    <%= image_tag "default_profile_image.png", 
-      alt: @user.username, 
-      style: "border-radius: 50%; width: 4rem; height: 4rem;" %>
-  <% end %>
+<div class="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  
+  <!-- プロフィール情報セクション -->
+  <%= render 'profile', user: @user, show_edit_button: @show_edit_button %>
 
-  <h2 class="text-lg font-medium mb-1"><%= @user.username %></h2>
-
-  <div class="text-xs space-y-1">
-    <p class="text-gray-600">
-      <strong>ランニングの目的:</strong>
-      <%= @user.running_goal.present? ? @user.running_goal : '未設定' %>
-    </p>
-
-    <p class="text-gray-600">
-      <strong>ランニングの目標:</strong>
-      <%= @user.running_specs.present? ? @user.running_specs : '未設定' %>
-    </p>
-
-    <p class="text-gray-600 text-center">
-      <strong>自己紹介:</strong>
-      <%= @user.bio.present? ? simple_format(@user.bio) : '未設定' %>
-    </p>
-
-    <% if @user.reference_url1.present? %>
-      <a href="<%= @user.reference_url1 %>" target="_blank" class="text-blue-400 hover:underline">
-        SNSやブログ等のリンクはこちら
-      </a>
+  <!-- ユーザーの投稿一覧 -->
+  <div class="bg-base-100 p-6 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">投稿一覧</h3>
+    <% if @posts.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <% @posts.each do |post| %>
+          <%= render 'posts/post_card', post: post %>
+        <% end %>
+      </div>
+      
+      <!-- ページネーションコントロールの追加 -->
+      <div class="mt-6">
+        <%= paginate @posts %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">まだ投稿がありません。</p>
     <% end %>
   </div>
-
-<!-- 区切り線 -->
-<hr class="my-6 border-gray-300">
-
-<% if @user.posts.any? %>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    <% @user.posts.each do |post| %>
-      <%= render 'posts/post_card', post: post %>
-    <% end %>
-  </div>
-<% else %>
-  <p class="text-gray-500">まだ投稿がありません。</p>
-<% end %>
+</div>
