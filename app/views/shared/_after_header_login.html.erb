@@ -31,12 +31,14 @@
         </li>
         <li>
           <%= link_to '下書き保存した投稿', drafts_posts_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        </li>
         <hr class="border-gray-200">
         <li>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <hr class="border-gray-200">
-        <%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        <li>
+          <%= link_to '利用規約', terms_of_service_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <li>
           <%= link_to 'プライバシーポリシー', privacy_policy_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
@@ -45,6 +47,10 @@
           <%= link_to 'お問い合わせ', "https://forms.gle/YMuTma5zqtiNunGaA", class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <hr class="border-gray-200">
+        <!-- シェアボタンの追加 -->
+        <li>
+          <%= render 'shared/share_button' %>
+        </li>
         <li class="text-center text-xs mt-2 text-gray-500">&copy; 2024 RunBreeze</li>
       </ul>
     </div>

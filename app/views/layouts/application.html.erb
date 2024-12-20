@@ -7,6 +7,20 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- OGPメタタグの追加 -->
+    <meta property="og:title" content="RunBreeze" />
+    <meta property="og:description" content="RunBreezeでランニング情報を共有しよう！" />
+    <meta property="og:image" content="<%= asset_url('RunBreeze.png') %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RunBreeze" />
+
+    <!-- Twitter Cardメタタグの追加 -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RunBreeze" />
+    <meta name="twitter:description" content="RunBreezeでランニング情報を共有しよう！" />
+    <meta name="twitter:image" content="<%= asset_url('RunBreeze.png') %>" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -34,20 +48,21 @@
     <%= render 'shared/flash_messages' %>
 
     <main class="flex-grow mb-32">
-    <%= yield %>
-    <%= render "shared/footer" %>
+      <%= yield %>
+      <%= render "shared/footer" %>
+    </main>
   </body>
   <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service_worker.js')
-        .then((registration) => {
-          console.log('Service Worker registered:', registration);
-        })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-    });
-  }
-</script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service_worker.js')
+          .then((registration) => {
+            console.log('Service Worker registered:', registration);
+          })
+          .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
 </html>
