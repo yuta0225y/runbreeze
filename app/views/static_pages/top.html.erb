@@ -1,12 +1,86 @@
 <div class="hero">
-  <div class="hero-content text-center">
+  <div class="hero-content text-center
     <div class="mx-auto w-full">
-      <%= image_tag "top.png", alt: "RunBreeze Logo", class: "w-full mb-8" %>
-
-      <% if !current_user %>
-        <%= link_to "投稿をみる", posts_path, class: "btn btn-primary text-base-100" %>
-        <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100 btn-accent" %>
-      <% end %>
+      <%= image_tag "RunBreeze.svg", alt: "RunBreezeロゴ", class: "mx-auto max-w-full h-auto" %>
     </div>
   </div>
 </div>
+
+<% if !current_user %>
+<div class="mb-8 text-center">
+  <%= link_to "投稿をみる", posts_path, class: "btn btn-primary text-base-100 mr-2" %>
+  <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100 btn-accent" %>
+</div>
+<% end %>
+
+
+<!-- 機能紹介セクション開始 -->
+<section class="py-12 bg-blue-100">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl base-gray-700 font-semibold text-center mb-8">主な機能</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- 投稿作成 -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-pencil-alt text-4xl text-blue-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">投稿作成</h3>
+        <p class="text-gray-700">ランニングに関する情報を簡単に投稿。</p>
+      </div>
+
+      <!-- 投稿閲覧 -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-eye text-4xl text-green-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">投稿閲覧</h3>
+        <p class="text-gray-700">他のランナーの投稿を閲覧して情報を共有。</p>
+      </div>
+
+      <!-- ランニングコーチ機能 -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-user-ninja text-4xl text-purple-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">ランニングコーチ（未実装）</h3>
+        <p class="text-gray-700">ランニングのプロがあなたのランニングをサポート！</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- 機能紹介セクション終了 -->
+
+<!-- こんな方におすすめセクション開始 -->
+<section class="py-12 bg-base-100">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl base-gray-700 font-semibold text-center mb-8">こんな方におすすめ！</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- 初心者ランナー -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-running text-4xl text-blue-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">初心者ランナー</h3>
+        <p class="text-gray-700">ランニングを始めたばかりの方に、ランニングの楽しさを提供。</p>
+      </div>
+
+      <!-- コミュニティを求める人 -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-users text-4xl text-green-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">コミュニティを求める人</h3>
+        <p class="text-gray-700">ランニング仲間を探している方に、コミュニティを提供。</p>
+      </div>
+
+      <!-- 健康志向の方 -->
+      <div class="card bg-white border border-gray-300 shadow-lg rounded-lg p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center">
+        <i class="fas fa-heartbeat text-4xl text-red-500 mb-4"></i>
+        <h3 class="text-xl text-gray-700 font-semibold mb-2">健康志向の方</h3>
+        <p class="text-gray-700">健康を意識している方に、ランニングの情報を提供。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- こんな方におすすめセクション終了 -->
+
+<% if !current_user %>
+<div class="mb-8 text-center mt-8">
+  <%= link_to "投稿をみる", posts_path, class: "btn btn-primary text-base-100 mr-2" %>
+  <%= link_to "新規登録", new_user_registration_path, class: "btn text-base-100 btn-accent" %>
+</div>
+<% end %>
