@@ -1,0 +1,5 @@
+<div class="flex justify-center mt-2">
+  <%= link_to "https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape('RunBreezeでランニング情報をシェアしよう！')}", target: "_blank", class: "btn btn-ghost text-gray-700 hover:bg-gray-100 rounded-md" do %>
+    <%= image_tag 'x.svg', alt: 'Xシェアボタン', class: 'h-5 w-5' %>
+  <% end %>
+</div>
