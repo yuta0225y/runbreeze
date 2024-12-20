@@ -1,3 +1,4 @@
+<!-- app/views/posts/show.html.erb -->
 <div class="container mx-auto px-4 py-1">
   <!-- ユーザー情報 -->
   <div class="flex items-center justify-between mb-2">
@@ -27,7 +28,13 @@
     <% if @post.post_image.present? %>
       <%= image_tag @post.post_image.url, alt: @post.title, class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
     <% else %>
-      <%= image_tag 'default_post_image.jpg', alt: "No Image", class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
+      <% category_image_filename = category_image_filename(@post.category.name) %>
+      <% category_image_path = "category_defaults/#{category_image_filename}" %>
+      <% if asset_exists?(category_image_path) %>
+        <%= image_tag category_image_path, alt: @post.category.name, class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
+      <% else %>
+        <%= image_tag 'default_post_image.jpg', alt: "No Image", class: "max-w-lg max-h-96 w-full h-auto object-cover rounded-lg shadow-lg" %>
+      <% end %>
     <% end %>
 
     <% if @post.category.present? %>
@@ -78,7 +85,7 @@
   <!-- タグ -->
   <div class="flex flex-wrap gap-2 mt-4 mb-4">
     <% @post.tags.each do |tag| %>
-      <span class="bg-blue-100 text-gray-700 text-xs px-2 py-1 rounded-full shadow-sm">#<%= tag.name %></span>
+      <span class="bg-base-100 text-gray-700 text-xs px-2 py-1 rounded-full shadow-sm">#<%= tag.name %></span>
     <% end %>
   </div>
 
@@ -93,7 +100,7 @@
             <% if comment.user.profile_image.present? %>
               <%= image_tag comment.user.profile_image.url, alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
             <% else %>
-              <%= image_tag "default_profile_image.svg", alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
+              <%= image_tag "default_profile_image.png", alt: comment.user.username, class: "w-6 h-6 rounded-full mr-2" %>
             <% end %>
           <% end %>
           <span><%= comment.content %></span>
