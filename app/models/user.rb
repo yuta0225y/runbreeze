@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :bookmark_posts, through: :bookmarks, source: :post
   has_many :likes, dependent: :destroy
   has_many :like_posts, through: :likes, source: :post
+  has_many :advices, dependent: :destroy
 
   # Ransackで検索可能な属性を指定
   def self.ransackable_attributes(auth_object = nil)

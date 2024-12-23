@@ -1,0 +1,39 @@
+<div class="container mx-auto p-4 md:p-8">
+  <% if @advices.any? %>
+    <h2 class="text-2xl font-bold mb-6 text-center flex items-center justify-center">
+      <%= image_tag 'coach.svg', alt: "AIコーチ", class: "w-10 h-10 mr-2" %>
+      過去の相談
+    </h2>
+  <% end %>
+
+  <% if @advices.any? %>
+    <% @advices.each do |advice| %>
+      <%= link_to advice_path(advice), class: "card bg-white shadow-md mb-6 p-6 rounded-lg block hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary" do %>
+        <div class="flex items-center space-x-4">
+          <!-- ユーザーアイコン -->
+          <% if advice.user.profile_image.present? %>
+            <%= image_tag(advice.user.profile_image.url, alt: advice.user.username, class: "w-10 h-10 rounded-full object-cover") %>
+          <% else %>
+            <%= image_tag("default_profile_image.png", alt: advice.user.username, class: "w-10 h-10 rounded-full object-cover") %>
+          <% end %>
+          
+          <!-- 相談内容 -->
+          <h3 class="font-bold text-lg text-primary"><%= advice.input %></h3>
+        </div>
+        <p class="mt-4 text-sm text-gray-700"><%= truncate(advice.response, length: 100) %></p>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div class="bg-white shadow-md rounded-lg p-6 text-center">
+      <p class="text-gray-500">
+        まだトレーナーからのアドバイスがありません。<br>
+        <%= link_to "AIコーチに相談する", new_advice_path, class: "text-blue-500 underline" %>から始めましょう！
+      </p>
+    </div>
+  <% end %>
+
+  <div class="flex justify-center mt-8">
+    <%= link_to "AIコーチに相談する", new_advice_path, class: "btn btn-primary text-base-100 w-full md:w-auto shadow-md hover:shadow-lg transition-all" %>
+  </div>
+</div>
+

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   resources :bookmarks, only: %i[create destroy index]
   resources :likes, only: %i[index]
+  resources :advices, only: %i[new create show index]
 
   # Health check ルート（アップタイムモニタリング用）
   get "up" => "rails/health#show", as: :rails_health_check
