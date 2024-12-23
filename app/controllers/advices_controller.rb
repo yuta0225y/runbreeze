@@ -14,7 +14,7 @@ class AdvicesController < ApplicationController
     if @advice.save
       response = fetch_openai_advice(@advice.input)
       @advice.update(response: response)
-      redirect_to @advice, notice: 'AIコーチアからアドバイスを受けました。'
+      redirect_to @advice, notice: "AIコーチアからアドバイスを受けました。"
     else
       render :new
     end
@@ -31,7 +31,7 @@ class AdvicesController < ApplicationController
   end
 
   def fetch_openai_advice(question)
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
+    client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
 
     prompt = <<~PROMPT
       あなたは爽やかで人間味のある経験豊富なランニングコーチです。
@@ -51,11 +51,11 @@ class AdvicesController < ApplicationController
           { role: "user", content: prompt }
         ],
         max_tokens: 500,
-        temperature: 0.7,
+        temperature: 0.7
       }
     )
 
-    response.dig('choices', 0, 'message', 'content').strip
+    response.dig("choices", 0, "message", "content").strip
   rescue StandardError => e
     Rails.logger.error("OpenAI APIエラー: #{e.message}")
     "現在AIコーチからアドバイスを受けることができません。後ほどお試しください。"
