@@ -12,6 +12,12 @@
     <span class="text-xs text-gray-500">投稿</span>
   <% end %>
 
+  <!-- アドバイス -->
+  <%= link_to advices_path, class: "flex flex-col items-center flex-1 py-2 text-gray-500 hover:text-gray-700 transition-colors duration-200" do %>
+    <%= image_tag 'advice.svg', alt: "Advice", class: "h-6 w-6 mb-1" %> 
+    <span class="text-xs text-gray-500">AIコーチ</span>
+  <% end %>
+
   <!-- マイページ -->
   <%= link_to mypage_path, class: "flex flex-col items-center flex-1 py-2 text-gray-500 hover:text-gray-700 transition-colors duration-200" do %>
     <%= image_tag 'mypage.svg', alt: "My Page", class: "h-6 w-6 mb-1" %> 
