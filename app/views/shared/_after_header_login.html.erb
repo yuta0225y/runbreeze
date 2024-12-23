@@ -23,7 +23,6 @@
 
       <ul tabindex="0" class="dropdown-content menu p-2 shadow-md bg-base-100 rounded-lg w-52 absolute top-full right-0 mt-2 z-50">
         <!-- ドロップダウンメニュー項目 -->
-        <li>
           <%= link_to 'ブックマークした投稿', bookmarks_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <li>
@@ -32,8 +31,10 @@
         <li>
           <%= link_to '下書き保存した投稿', drafts_posts_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
-        <hr class="border-gray-200">
         <li>
+          <%= link_to 'AIコーチに相談', new_advice_path, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
+        <li>
+        <hr class="border-gray-200">
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "ログアウトしてもよろしいですか？" }, class: "btn btn-ghost w-full text-left text-gray-700 hover:bg-gray-100 rounded-md" %>
         </li>
         <hr class="border-gray-200">
