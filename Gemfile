@@ -72,6 +72,10 @@ group :development, :test do
 
   gem "faker"
 
+  gem "rspec-rails"
+
+  gem "factory_bot_rails"
+
   # 環境変数用
   gem "dotenv-rails"
 end
@@ -87,4 +91,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "simplecov", require: false
 end
