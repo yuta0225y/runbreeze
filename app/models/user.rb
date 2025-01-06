@@ -9,7 +9,7 @@ class User < ApplicationRecord
                        length: { minimum: 3, maximum: 25 }
 
   # その他のカスタムバリデーション
-  validates :running_goal, inclusion: { in: ["ダイエット", "記録更新", "健康維持", "ストレス解消", "体力向上", "仲間づくり"] }, allow_blank: true
+  validates :running_goal, inclusion: { in: [ "ダイエット", "記録更新", "健康維持", "ストレス解消", "体力向上", "仲間づくり" ] }, allow_blank: true
   validates :running_specs, length: { maximum: 50 }, allow_blank: true
   validates :twitter_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
   validates :instagram_url, format: { with: URI::DEFAULT_PARSER.make_regexp }, allow_blank: true
