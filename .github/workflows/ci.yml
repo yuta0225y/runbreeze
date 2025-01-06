@@ -103,17 +103,11 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
-      - name: Prepare database
-        env:
-          RAILS_ENV: test
-        run: |
-          bin/rails db:create
-          bin/rails db:migrate
-
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          # REDIS_URL: redis://localhost:6379/0
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
