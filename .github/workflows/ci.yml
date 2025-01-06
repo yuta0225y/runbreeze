@@ -66,60 +66,60 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-test:
-  runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-  services:
-    postgres:
-      image: postgres
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      ports:
-        - 5432:5432
-      options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y imagemagick libmagickwand-dev pkg-config google-chrome-stable curl libjemalloc2 libvips postgresql-client
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick libmagickwand-dev pkg-config google-chrome-stable curl libjemalloc2 libvips postgresql-client
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
-        bundler-cache: false
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: false
 
-    - name: Install Bundler
-      run: gem install bundler
+      - name: Install Bundler
+        run: gem install bundler
 
-    - name: Bundle install
-      run: bundle install --jobs 4 --retry 3
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
 
-    - name: Verify ImageMagick installation
-      run: pkg-config --cflags --libs MagickCore
+      - name: Verify ImageMagick installation
+        run: pkg-config --cflags --libs MagickCore
 
-    - name: Prepare database
-      env:
-        RAILS_ENV: test
-      run: |
-        bin/rails db:create
-        bin/rails db:migrate
+      - name: Prepare database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
 
-    - name: Run tests
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
-      run: bundle exec rspec
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+        run: bundle exec rspec
 
-    - name: Keep screenshots from failed system tests
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: screenshots
-        path: ${{ github.workspace }}/tmp/screenshots
-        if-no-files-found: ignore
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
