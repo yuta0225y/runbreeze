@@ -8,7 +8,6 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,12 +32,15 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
+      - name: Install latest Brakeman
+        run: gem install brakeman
+
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: brakeman --no-pager
+
 
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,6 +68,7 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+
   test:
     runs-on: ubuntu-latest
 
@@ -77,7 +80,11 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Checkout code
@@ -103,10 +110,19 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
+      # データベースを作成＆マイグレーション
+      - name: Prepare database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+
+      # テストを実行
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+          DATABASE_URL: postgres://postgres:postgres@db:5432/myapp_test
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
