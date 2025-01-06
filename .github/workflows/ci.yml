@@ -78,8 +78,8 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
+        # ports:  # ポートマッピングは不要
+        #   - 5432:5432
         options: >-
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
@@ -110,7 +110,18 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
-      # データベースを作成＆マイグレーション
+      - name: Check db hostname resolution
+        run: |
+          ping -c 1 db || echo "db host is not reachable"
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          for i in {1..10}; do
+            PGPASSWORD=postgres pg_isready -h db -U postgres && break
+            echo "Waiting for db to be ready..."
+            sleep 2
+          done
+
       - name: Prepare database
         env:
           RAILS_ENV: test
@@ -118,7 +129,6 @@ jobs:
           bin/rails db:create
           bin/rails db:migrate
 
-      # テストを実行
       - name: Run tests
         env:
           RAILS_ENV: test
