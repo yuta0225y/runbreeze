@@ -4,7 +4,6 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@example.com" }
     password { "password" }
     password_confirmation { "password" }
-    running_goal { "健康維持" }
 
     # プロフィール画像をオプションとする
     trait :with_profile_image do
