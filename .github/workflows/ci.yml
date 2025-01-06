@@ -1,3 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  scan_ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ImageMagick and dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick libmagickwand-dev pkg-config
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: false
+
+      - name: Install Bundler
+        run: gem install bundler
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Verify ImageMagick installation
+        run: pkg-config --cflags --libs MagickCore
+
+      - name: Scan for common Rails security vulnerabilities using static analysis
+        run: bin/brakeman --no-pager
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ImageMagick and dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick libmagickwand-dev pkg-config
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: false
+
+      - name: Install Bundler
+        run: gem install bundler
+
+      - name: Bundle install
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Verify ImageMagick installation
+        run: pkg-config --cflags --libs MagickCore
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github
+
 test:
   runs-on: ubuntu-latest
 
