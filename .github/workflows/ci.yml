@@ -78,8 +78,6 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # ports:  # ポートマッピングは不要
-        #   - 5432:5432
         options: >-
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
@@ -126,6 +124,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
+          cp config/database.ci.yml config/database.yml
           bin/rails db:create
           bin/rails db:migrate
 
