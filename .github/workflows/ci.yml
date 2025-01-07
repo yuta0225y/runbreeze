@@ -98,20 +98,6 @@ jobs:
       - name: Bundle install
         run: bundle install --jobs 4 --retry 3
 
-      # ここでホスト解決をテスト
-      - name: Check host resolution
-        run: |
-          ping -c 1 postgres || echo "Could not resolve 'postgres' host"
-
-      # PostgreSQL起動を待機
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in {1..10}; do
-            pg_isready -h postgres -U postgres -p 5432 && break
-            echo "Waiting for postgres to be ready..."
-            sleep 3
-          done
-
       - name: Database create and migrate
         run: |
           cp config/database.yml.ci config/database.yml
@@ -124,7 +110,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/myapp_test
+          DATABASE_URL: postgres://postgres:password@postgres:5432/myapp_test
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
