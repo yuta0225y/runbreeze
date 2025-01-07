@@ -8,6 +8,7 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,15 +33,12 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
-      - name: Install latest Brakeman
-        run: gem install brakeman
-
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: brakeman --no-pager
-
+        run: bin/brakeman --no-pager
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -68,21 +66,18 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-
   test:
     runs-on: ubuntu-latest
 
     services:
-      db:
+      postgres:
         image: postgres
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
@@ -108,30 +103,19 @@ jobs:
       - name: Verify ImageMagick installation
         run: pkg-config --cflags --libs MagickCore
 
-      - name: Check db hostname resolution
+      - name: Database create and migrate
         run: |
-          ping -c 1 db || echo "db host is not reachable"
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in {1..10}; do
-            PGPASSWORD=postgres pg_isready -h db -U postgres && break
-            echo "Waiting for db to be ready..."
-            sleep 2
-          done
-
-      - name: Prepare database
-        env:
-          RAILS_ENV: test
-        run: |
-          cp config/database.yml.example config/database.yml
-          bin/rails db:create
-          bin/rails db:migrate
+      - name: assets precompile
+        run: bundle exec rake assets:precompile RAILS_ENV=test
 
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@db:5432/myapp_test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
