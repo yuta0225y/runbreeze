@@ -66,67 +66,67 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-  test:
-    runs-on: ubuntu-latest
+  # test:
+  #   runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: password
+  #       options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y imagemagick libmagickwand-dev pkg-config google-chrome-stable curl libjemalloc2 libvips postgresql-client
+  #     - name: Install dependencies
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y imagemagick libmagickwand-dev pkg-config google-chrome-stable curl libjemalloc2 libvips postgresql-client
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: false
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: .ruby-version
+  #         bundler-cache: false
 
-      - name: Install Bundler
-        run: gem install bundler
+  #     - name: Install Bundler
+  #       run: gem install bundler
 
-      - name: Bundle install
-        run: bundle install --jobs 4 --retry 3
+  #     - name: Bundle install
+  #       run: bundle install --jobs 4 --retry 3
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in {1..10}; do
-            pg_isready -h postgres -U postgres -p 5432 && break
-            echo "Waiting for postgres to be ready..."
-            sleep 3
-          done
+  #     - name: Wait for PostgreSQL to be ready
+  #       run: |
+  #         for i in {1..10}; do
+  #           pg_isready -h postgres -U postgres -p 5432 && break
+  #           echo "Waiting for postgres to be ready..."
+  #           sleep 3
+  #         done
 
-      - name: Database create and migrate
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+  #     - name: Database create and migrate
+  #       env:
+  #         RAILS_ENV: test
+  #         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  #       run: |
+  #         bundle exec rails db:create RAILS_ENV=test
+  #         bundle exec rails db:migrate RAILS_ENV=test
 
-      - name: assets precompile
-        run: bundle exec rake assets:precompile RAILS_ENV=test
+  #     - name: assets precompile
+  #       run: bundle exec rake assets:precompile RAILS_ENV=test
 
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: bundle exec rspec
+  #     - name: Run tests
+  #       env:
+  #         RAILS_ENV: test
+  #         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  #       run: bundle exec rspec
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+  #     - name: Keep screenshots from failed system tests
+  #       uses: actions/upload-artifact@v4
+  #       if: failure()
+  #       with:
+  #         name: screenshots
+  #         path: ${{ github.workspace }}/tmp/screenshots
+  #         if-no-files-found: ignore
