@@ -107,6 +107,9 @@ jobs:
           done
 
       - name: Database create and migrate
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
@@ -118,7 +121,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:password@localhost:5432/myapp_test
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
