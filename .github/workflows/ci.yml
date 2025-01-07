@@ -111,7 +111,6 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
