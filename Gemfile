@@ -93,4 +93,5 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", require: false
   gem "shoulda-matchers"
+  gem "webmock"
 end
