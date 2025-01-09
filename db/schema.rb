@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.2].define(version: 2024_12_22_111049) do
+
+ActiveRecord::Schema[7.2].define(version: 2025_01_09_081336) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,8 +64,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_22_111049) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_post_tags_on_post_id"
-    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
+    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
@@ -128,4 +128,3 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_22_111049) do
   add_foreign_key "posts", "users"
   add_foreign_key "tags", "categories"
 end
-
