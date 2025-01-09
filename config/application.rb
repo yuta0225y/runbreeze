@@ -11,6 +11,9 @@ module Myapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
+    # app/services ディレクトリをオートロードパスに追加
+    config.eager_load_paths << Rails.root.join("app/services")
+
     # Autoload settings
     config.autoload_lib(ignore: %w[assets tasks])
 
