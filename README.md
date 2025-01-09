@@ -85,7 +85,7 @@
     - kaminari（ページネーション）
     - Rspec（テスト）等
 
-## ■ 画面遷移図
+## ■ 画面遷移図（当初作成したもの）
 https://www.figma.com/design/DzoAn9Omlx50S9XRIt02uF/RunBreeze-(AI%E6%A0%A1%E6%AD%A3%EF%BC%89?node-id=0-1&t=taU6fewwxzLGpUAV-1
 
 ## ■ ER図
