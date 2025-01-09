@@ -1,5 +1,3 @@
-# config/locales/devise.ja.yml
-
 ja:
   errors:
     format: "%{attribute}%{message}"
