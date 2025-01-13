@@ -76,7 +76,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.8)
+    bigdecimal (3.1.9)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -92,7 +92,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    carrierwave (3.0.7)
+    carrierwave (3.1.1)
       activemodel (>= 6.0.0)
       activesupport (>= 6.0.0)
       addressable (~> 2.6)
@@ -102,7 +102,7 @@ GEM
     childprocess (5.1.0)
       logger (~> 1.5)
     concurrent-ruby (1.3.4)
-    connection_pool (2.4.1)
+    connection_pool (2.5.0)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -144,12 +144,12 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    ffi (1.17.0-aarch64-linux-gnu)
-    ffi (1.17.0-arm-linux-gnu)
-    ffi (1.17.0-arm64-darwin)
-    ffi (1.17.0-x86-linux-gnu)
-    ffi (1.17.0-x86_64-darwin)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.1-aarch64-linux-gnu)
+    ffi (1.17.1-arm-linux-gnu)
+    ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86-linux-gnu)
+    ffi (1.17.1-x86_64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
     fog-aws (3.29.0)
       base64 (~> 0.2.0)
       fog-core (~> 2.6)
@@ -206,7 +206,7 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
-    logger (1.6.1)
+    logger (1.6.5)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -223,7 +223,7 @@ GEM
     mime-types-data (3.2024.1105)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.4)
     msgpack (1.7.3)
     multi_json (1.15.0)
     multi_xml (0.7.1)
@@ -405,7 +405,7 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (2.3.2)
-    securerandom (0.3.1)
+    securerandom (0.4.1)
     selenium-webdriver (4.25.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -477,7 +477,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
-  carrierwave (~> 3.0)
+  carrierwave (~> 3.1)
   cssbundling-rails
   debug
   devise
