@@ -5,7 +5,7 @@ gem "devise"
 
 # 画像アップロード用
 gem "carrierwave", "~> 3.0"
-gem "rmagick", "~> 6.0", ">= 6.0.1"
+gem "rmagick", "~> 6.1"
 
 # amazons3
 gem "fog-aws"

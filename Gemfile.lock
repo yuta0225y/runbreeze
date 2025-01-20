@@ -282,7 +282,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
-    pkg-config (1.5.7)
+    pkg-config (1.5.9)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -348,7 +348,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.3.9)
-    rmagick (6.0.1)
+    rmagick (6.1.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec-core (3.13.2)
@@ -497,7 +497,7 @@ DEPENDENCIES
   rails (~> 7.2.1, >= 7.2.1.2)
   rails-i18n
   ransack
-  rmagick (~> 6.0, >= 6.0.1)
+  rmagick (~> 6.1)
   rspec-rails
   rubocop-rails-omakase
   ruby-openai
